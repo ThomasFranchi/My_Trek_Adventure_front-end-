@@ -1,18 +1,17 @@
 import { useState } from "react";
-import GuideRegister from "../components/organisms/GuideRegister";
+
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
-
-function GuidesView() {
+function TreksView() {
   const [isConnected, setIsConnected] = useState(false);
 
   return (
     <div>
       <Topbar />
-      <GuideRegister/>
+      <p>Page des treks</p>
       <Footer />
     </div>
   );
 }
 
-export default GuidesView;
+export default TreksView;

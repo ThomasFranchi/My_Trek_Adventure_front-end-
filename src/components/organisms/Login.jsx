@@ -46,15 +46,15 @@ function Login() {
     if (data.success) {
       setsuccessMessage(data.message);
 
+      // Stock Token into LocalStorage
+      localStorage.setItem("token", token);
       // TODO
-      //   navigate("/sessions")
+      //navigate("/sessions")
       setUserLog(data.user);
+      navigate("/parcours/");
     } else if (!data.success) {
       setErrorMessage(data.message);
     }
-
-    // Stock Token into LocalStorage
-    localStorage.setItem("token", token);
   }
 
   return (
@@ -63,7 +63,7 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <Input
           name="mail"
-          label="mail"
+          label="Mail"
           onChange={handleChange}
           value={user.mail}
           required={true}
@@ -78,7 +78,7 @@ function Login() {
           required={true}
         />
         <div>
-            changer vers:
+            Changer vers : 
           {loginRole === "guide" ? <Button onClick={ () => setLoginRole("admin")}>Administrateur</Button>
           : 
           <Button onClick={() => setLoginRole("guide")}>Guide</Button> }
