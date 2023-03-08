@@ -7,7 +7,7 @@ const Error = lazy(() => import("./views/Error"));
 const GuidesView = lazy(() => import("./views/GuidesView"));
 const AdminsView = lazy(() => import("./views/AdminsView"));
 const ParcoursView = lazy(() => import("./views/ParcoursView"));
-
+const TreksView = lazy(()=> import("./views/TreksView"));
 
 const router = createBrowserRouter([
   {
@@ -44,8 +44,14 @@ const router = createBrowserRouter([
       </Suspense>
     )
   },
-
-
+  {
+    path: "/treks/",
+    element: (
+      <Suspense>
+        <TreksView />
+      </Suspense>
+    )
+  },
 
 ]);
 
