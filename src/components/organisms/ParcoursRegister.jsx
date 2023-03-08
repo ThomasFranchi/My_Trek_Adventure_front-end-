@@ -85,6 +85,7 @@ function ParcoursRegister() {
       value: newParcour.price,
       required: "{true}",
       type: "number",
+      min: 0,
     },
     {
       name: "picture",
