@@ -5,8 +5,8 @@ import "./styles/App.css";
 const Home = lazy(() => import("./views/Home"));
 const Error = lazy(() => import("./views/Error"));
 const ParcoursView = lazy(() => import("./views/ParcoursView"));
+const TreksView = lazy(()=> import("./views/TreksView"));
 const SingleParcoursView = lazy(() => import("./views/SingleParcoursView"));
-const TreksView = lazy(() => import("./views/TreksView"));
 const GuidesView = lazy(() => import("./views/GuidesView"));
 const ClientsView = lazy(() => import("./views/ClientsView"));
 
@@ -67,6 +67,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <AdminsView />
+      </Suspense>
+    )
+  },
+  {
+    path: "/treks/",
+    element: (
+      <Suspense>
+        <TreksView />
       </Suspense>
     )
   },

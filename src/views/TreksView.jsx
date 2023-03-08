@@ -9,9 +9,8 @@ function TreksView() {
     <div>
       <Topbar />
       <p>Page des treks</p>
+      <TreksRegister/>
       <Footer />
     </div>
   );
 }
-
-export default TreksView;
