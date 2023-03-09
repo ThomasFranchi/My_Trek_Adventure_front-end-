@@ -6,31 +6,19 @@ import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 
 function SingleGuideView() {
-  const [guide, setGuide] = useState([])
+  const [guide, setGuide] = useState({})
 
   let params = useParams();
   useEffect(() => {displayGuide()}, [])
 
   async function displayGuide()
   {
-    const options = 
-    {
-        method: 'POST',
-        headers: 
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },  
-        body: JSON.stringify({
-            slug: params.slug
-        })
-    };
-    const response = await fetch('http://localhost:3001/guides/single-guide', options);
+    const response = await fetch(`http://localhost:3001/guides/${params.slug}`);
     const data = await response.json();
     console.log(data);
     if (!data) 
     {
-      setGuide([]);
+      setGuide({});
     }
     setGuide(data);
   }
@@ -38,7 +26,7 @@ function SingleGuideView() {
   return (
     <div>
       <Topbar />
-      <h1>Page du Guide : {guide.firstName}</h1>
+      <h1>Page de {guide.firstName} {guide.lastName}</h1>
       <div id="postGuide">
         <div><p> ICI LA PHOTO </p></div>
         <div className="content">

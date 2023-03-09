@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/parcours/",
+    path: "/parcours",
     element: (
       <Suspense>
         <ParcoursView />
