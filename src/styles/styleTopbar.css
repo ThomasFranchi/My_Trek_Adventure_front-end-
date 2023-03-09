@@ -1,0 +1,93 @@
+/* General */
+#topbar
+{
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  background-color: #582f13;
+  padding: 0px 15px;
+  z-index: 10;
+}
+
+.topbar-line
+{
+  display: inline-flex;
+  color: #ffffff;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 5px 25px;
+  padding: 10px 15px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.logo
+{
+  object-fit: contain;
+  max-width: 10%;
+  height: auto;
+  vertical-align: middle;
+}
+
+/* Partie Commune */
+.linkDiv
+{
+  margin: 0px 20px;
+}
+
+.link
+{
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 24px;
+  color: #ffffff;
+  width:100%;
+  padding-bottom:15px;
+}
+
+.link:hover
+{
+  border-bottom: 5px solid #4a5cff;
+  padding-bottom:15px;
+  font-size: 28px;
+}
+.sideIcon
+{
+  max-width: 10%;
+  vertical-align:middle;
+  margin: 0px 15px;
+}
+
+/* Connecté */
+
+.userIcon
+{
+  width: 5%;
+  height: auto;
+}
+
+.line
+{
+  display: inline-flex;
+  color: #ffffff;
+  margin: 0px 25px;
+  align-items: center;
+  justify-content: end;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 1280px) {
+  .link {
+    font-size: 0px;
+    width:0%;
+  }
+  .link:hover
+  {
+    font-size: 0px;
+    width:0%;
+  }
+  .sideIcon
+  {
+    max-width: 50%;
+  }
+}
