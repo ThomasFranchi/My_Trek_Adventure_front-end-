@@ -7,6 +7,7 @@ const Error = lazy(() => import("./views/Error"));
 const ParcoursView = lazy(() => import("./views/ParcoursView"));
 const TreksView = lazy(()=> import("./views/TreksView"));
 const SingleParcoursView = lazy(() => import("./views/SingleParcoursView"));
+const SingleGuideView = lazy(() => import("./views/SingleGuideView"));
 const GuidesView = lazy(() => import("./views/GuidesView"));
 const ClientsView = lazy(() => import("./views/ClientsView"));
 
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <GuidesView />
+      </Suspense>
+    )
+  },
+  {
+    path: "/guides-page/:slug",
+    element: (
+      <Suspense>
+        <SingleGuideView />
       </Suspense>
     )
   },

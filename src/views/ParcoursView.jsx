@@ -51,9 +51,9 @@ function ParcoursView() {
         <div id = "parcoursList">
           <p>Liste des parcours</p>
             {errorMsg}
-            {parcoursList.map((parcours, index) => (
+            {parcoursList.map((parcours) => (
               <Parcours 
-                key = {index}
+                key = {parcours.slug}
                 picture = {parcours.picture} 
                 name = {parcours.name} 
                 duration = {parcours.duration} 
