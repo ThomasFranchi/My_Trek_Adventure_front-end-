@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import ParcoursRegister from "../components/organisms/ParcoursRegister";
 
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
@@ -9,32 +8,19 @@ import fullStar from "../pictures/ico_fullStar.png";
 
 
 function SingleParcoursView() {
-  const [parcours, setParcours] = useState([])
-
+  const [parcours, setParcours] = useState({})
   let params = useParams();
   useEffect(() => {displayParcours()}, [])
 
   let difficultyLevel;
   async function displayParcours()
   {
-    const options = 
-    {
-        method: 'POST',
-        headers: 
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },  
-        body: JSON.stringify({
-            slug: params.slug
-        })
-    };
-    const response = await fetch('http://localhost:3001/parcours/single-parcours', options);
+    const response = await fetch(`http://localhost:3001/parcours/${params.slug}`);
     const data = await response.json();
     console.log(data);
     if (!data) 
     {
-      setParcours([]);
+      setParcours({});
     }
     setParcours(data);
   }
