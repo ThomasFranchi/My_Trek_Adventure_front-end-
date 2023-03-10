@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import ParcoursRegister from "../components/organisms/ParcoursRegister";
 
@@ -10,44 +10,53 @@ import Parcours from "../components/Parcours";
 import { UserConnect } from "../App";
 
 function ParcoursView() {
-  const [parcoursList, setParcourslist] = useState([])
+  const [parcoursList, setParcoursList] = useState([])
   const [errorMsg, setErrorMsg] = useState ("");
   const {userLog} = useContext(UserConnect);
-  const navigate = useNavigate();
+
+  console.log(userLog.role)
   
   useEffect(() => {displayParcoursList()}, [])
 
   async function displayParcoursList()
+  {
+    const options = 
     {
-      const response = await fetch('http://localhost:3001/parcours/');
-      const data = await response.json()
-      console.log(data);
-      if (!data) 
-      {
-        setParcourslist([]);
-        setErrorMsg("Aucun résultat trouvé");
-      }
-
-      if (Array.isArray(data)) 
-      {
-        setParcourslist(data);
-        setErrorMsg("");
-      }
+        method: 'GET',
+        headers: 
+        {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: "Bearer " + localStorage.getItem("token")
+        }
+    };
+    const response = await fetch('http://localhost:3001/parcours', options);
+    const data = await response.json();
+    if (!data) 
+    {
+      setParcoursList([]);
+      setErrorMsg("Aucun résultat trouvé");
     }
+
+    if (Array.isArray(data)) 
+    {
+      setParcoursList(data);
+      setErrorMsg("");
+    }
+  }
 
   return (
     <div>
       {!userLog && (
         <>
           <p>Vous n'avez pas l'autorisation d'accéder à cette page</p>
-          <p><Link to="/">Retour à l'accueil</Link></p>
-          
+          <p><Link to="/">Retour à l'accueil</Link></p>       
         </>
       )}
       {userLog && (
         <>
         <Topbar />
-        <ParcoursRegister/>
+        {userLog.role !== "guide" && (<ParcoursRegister/>)}
         <div id = "parcoursList">
           <p>Liste des parcours</p>
             {errorMsg}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import GuideRegister from "../components/organisms/GuideRegister";
 
@@ -13,13 +13,22 @@ function GuidesView() {
   const [guideList, setGuidelist] = useState([])
   const [errorMsg, setErrorMsg] = useState ("");
   const {userLog} = useContext(UserConnect);
-  const navigate = useNavigate();
 
   useEffect(() => {displayGuideList()}, [])
 
   async function displayGuideList()
     {
-      const response = await fetch('http://localhost:3001/guides/');
+      const options = 
+      {
+          method: 'GET',
+          headers: 
+          {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: "Bearer " + localStorage.getItem("token")
+          }
+      };
+      const response = await fetch('http://localhost:3001/guides/', options);
       const data = await response.json()
       console.log(data);
       if (!data) 
@@ -47,7 +56,7 @@ function GuidesView() {
         {userLog && (
           <>
           <Topbar />
-          <GuideRegister/>
+          {userLog.role !== "guide" && (<GuideRegister/>)}
           <div id = "guidesList">
             <p>Liste des guides</p>
               {errorMsg}
