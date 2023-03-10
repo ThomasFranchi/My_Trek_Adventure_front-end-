@@ -13,7 +13,7 @@ import Logo_Apple from "../pictures/logo_AppleStore.png";
 function Home() {
   const [displayLoginForm, setDisplayLoginForm] = useState(false);
   const {userLog} = useContext(UserConnect);
-
+  console.log({userLog});
   return (
     <div>
       {userLog && (
@@ -39,7 +39,7 @@ function Home() {
       )}
       {userLog && (
         <div>
-          <p>Bienvenue dans l'espace dédié au rôle {userLog.role}.</p> 
+          <p>Bienvenue !</p> 
           <p>A partir d'ici, ou dans la barre de navigation, vous pouvez accéder à différentes fonctions.</p> 
           <ul>
             <li>Vous pouvez accéder <Link to="/parcours/">aux différents parcours</Link> pour en créer de nouveaux, les modifier pour rajouter des étapes ou changer des infomrations ,et égalmeent les modifier.</li>

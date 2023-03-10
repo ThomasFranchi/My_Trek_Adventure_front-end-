@@ -30,7 +30,7 @@ function ParcoursRegister() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: "bearer " + token,
+        Authorization: "bearer " + token,
       },
       body: JSON.stringify(newParcour),
     };
