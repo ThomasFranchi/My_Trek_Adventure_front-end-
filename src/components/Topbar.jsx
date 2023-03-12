@@ -14,7 +14,7 @@ export default function Topbar()
 {
   /* State variables */
   const navigate=useNavigate();
-  const {disconnect} = useContext(UserConnect);
+  const {userLog, disconnect} = useContext(UserConnect);
 
   function login()
   {
@@ -44,12 +44,14 @@ export default function Topbar()
           <div className="linkDiv">
             <Link className="link" to="/guides/"><img className="sideIcon" src={icoGuide} alt="Icone des guides"></img> Guides</Link>
           </div>
-          <div className="linkDiv">
-            <Link className="link" to="/clients/"><img className="sideIcon" src={icoClient} alt="Icone des clients"></img> Clients</Link>
-          </div>
+          {userLog.role !== "guide" && (
+            <div className="linkDiv">
+              <Link className="link" to="/clients/"><img className="sideIcon" src={icoClient} alt="Icone des clients"></img> Clients</Link>
+            </div>
+          )}
           <div>
             <button onClick={logout}>Deconnexion</button>
-            <button onClick={null}>Mon profil</button>
+            {userLog.role === "guide" && ( <button onClick={null}>Mon profil</button> )}
             </div>
         </nav>
       </div>   

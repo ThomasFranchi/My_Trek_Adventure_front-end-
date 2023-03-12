@@ -8,8 +8,8 @@ import Button from "./atoms/Button";
 function Parcours ({name, beginDate, endDate, parcoursID, guideID, minPlaces, maxPlaces, slug}) 
 {
   const [errorMsg, setErrorMsg] = useState ("");
-  const [guideName, setGuideName] = useState ([]);
-  const [parcoursName, setParcoursName] = useState ([]);
+  const [guide, setGuide] = useState ([]);
+  const [parcours, setParcours] = useState ([]);
   const navigate = useNavigate();
   let params = useParams();
 
@@ -24,28 +24,25 @@ function Parcours ({name, beginDate, endDate, parcoursID, guideID, minPlaces, ma
         {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            Authorization: "Bearer " + localStorage.getItem("token")
+            Authorization: "Bearer " + localStorage.getItem("token")            
         }
     };
-    const parcoursResponse = await fetch(`http://localhost:3001/parcours/${params.parcoursID}`, options);
+    const parcoursResponse = await fetch("http://localhost:3001/parcours/get/:" + new URLSearchParams ({id: parcoursID}), options);
     const parcoursData = await parcoursResponse.json();
-    console.log(parcoursData);
     if (!parcoursData) 
     {
-      setParcoursName("");
+      setParcours("");
     }
-    setParcoursName(parcoursData);
-    console.log("Parcours " + parcoursName);
+    setParcours(parcoursData);
 
-    /*const guideResponse = await fetch(`http://localhost:3001/guides/${params.guideID}`, options);
+    const guideResponse = await fetch(`http://localhost:3001/guides/get/:` + new URLSearchParams ({id: guideID}), options);
     const guideData = await guideResponse.json();
     console.log(guideData);
     if (!guideData) 
     {
-      setGuideName("");
+      setGuide("");
     }
-    setGuideName(guideData);
-    console.log("Guide " + guideName);*/
+    setGuide(guideData);
   }
 
   function goToTrekPage ()
@@ -57,6 +54,8 @@ function Parcours ({name, beginDate, endDate, parcoursID, guideID, minPlaces, ma
   return (
     <div id="post"><div className="content">
           <div className="gameInfos">
+            <p><span className="userInfo">Sur le parcours </span> {parcours.name}</p>
+            <p><span className="userInfo">Animé par </span> {guide.firstName} {guide.lastName}</p>
             <p><span className="userInfo">Date de début :</span> {beginDate} </p>
             <p><span className="userInfo">Date de fin :</span> {endDate}</p>
             <p><span className="userInfo">Places minimum :</span> {minPlaces} places</p>
