@@ -11,7 +11,6 @@ import Trek from "../components/Trek";
 export default function TreksView() {
   const [treksList, setTreksList] = useState([]);
   const [errorMsg, setErrorMsg] = useState ("");
-  //const [isConnected, setIsConnected] = useState(false);
   const {userLog} = useContext(UserConnect);
 
   useEffect(() => {displayTreksList()}, [])
@@ -41,6 +40,7 @@ export default function TreksView() {
       setTreksList(data);
       setErrorMsg("");
     }
+    console.log(data);
   }
 
   return (
@@ -63,8 +63,8 @@ export default function TreksView() {
                 key = {trek.slug}
                 beginDate = {trek.beginDate} 
                 endDate = {trek.endDate} 
-                parcours = {trek.parcoursID} 
-                guide = {trek.guideID}
+                parcoursID = {trek.parcoursID} 
+                guideID = {trek.guideID}
                 minPlaces = {trek.minPlaces} 
                 maxPlaces = {trek.maxPlaces}
                 slug = {trek.slug}
