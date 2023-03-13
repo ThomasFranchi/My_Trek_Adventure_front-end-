@@ -18,6 +18,8 @@ function GuidesView() {
 
   async function displayGuideList()
     {
+      let token = localStorage.getItem("token");
+      
       const options = 
       {
           method: 'GET',
@@ -25,7 +27,7 @@ function GuidesView() {
           {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              Authorization: "Bearer " + localStorage.getItem("token")
+              Authorization: "Bearer " + token
           }
       };
       const response = await fetch('http://localhost:3001/guides/', options);

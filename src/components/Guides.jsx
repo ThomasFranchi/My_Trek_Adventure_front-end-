@@ -15,7 +15,7 @@ function Guides (
   function goToGuidesPage ()
   {
     console.log(slug);
-    navigate('/guides-page/'+slug);
+    navigate('/guides/'+slug);
   }
 
   return (

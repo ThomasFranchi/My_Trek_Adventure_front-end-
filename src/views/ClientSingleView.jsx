@@ -18,7 +18,15 @@ function SingleClientView() {
   
   async function displayClient()
   {
-    const response = await fetch(`http://localhost:3001/clients/${params.slug}`);
+    let token = localStorage.getItem("token");
+    let options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + token,
+      }
+    };
+    const response = await fetch(`http://localhost:3001/clients/${params.slug}`, options);
     const data = await response.json();
     console.log(data);
     if (!data) 

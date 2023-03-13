@@ -44,7 +44,7 @@ console.log(newGuide)
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: "bearer " + token,
+        Authorization: "bearer " + token,
       },
       body: JSON.stringify(newGuide),
     };

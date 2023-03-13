@@ -13,7 +13,16 @@ function SingleGuideView() {
 
   async function displayGuide()
   {
-    const response = await fetch(`http://localhost:3001/guides/${params.slug}`);
+    let token = localStorage.getItem("token");
+    let options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      }
+    };
+
+    const response = await fetch(`http://localhost:3001/guides/${params.slug}`, options);
     const data = await response.json();
     console.log(data);
     if (!data) 

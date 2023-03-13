@@ -12,7 +12,7 @@ function Parcours ({picture, name, duration, description, price, difficulty, slu
   function goToParcoursPage ()
   {
     console.log(slug);
-    navigate('/parcours-page/'+slug);
+    navigate('/parcours/'+slug);
   }
 
   async function setDifficulty (difficulty)
