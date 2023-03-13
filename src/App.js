@@ -10,7 +10,7 @@ const SingleParcoursView = lazy(() => import("./views/SingleParcoursView"));
 const SingleGuideView = lazy(() => import("./views/SingleGuideView"));
 const GuidesView = lazy(() => import("./views/GuidesView"));
 const ClientsView = lazy(() => import("./views/ClientsView"));
-
+const SingleClientView = lazy(() => import("./views/ClientSingleView"));
 const AdminsView = lazy(() => import("./views/AdminsView"));
 
 const router = createBrowserRouter([
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "/parcours-page/:slug",
+    path: "/parcours/:slug",
     element: (
       <Suspense>
         <SingleParcoursView />
@@ -48,6 +48,14 @@ const router = createBrowserRouter([
     )
   },
   {
+    path: "/treks/:slug",
+    element: (
+      <Suspense>
+        <TreksView />
+      </Suspense>
+    )
+  },
+  {
     path: "/guides",
     element: (
       <Suspense>
@@ -56,7 +64,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "/guides-page/:slug",
+    path: "/guides/:slug",
     element: (
       <Suspense>
         <SingleGuideView />
@@ -68,6 +76,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <ClientsView />
+      </Suspense>
+    )
+  },
+  {
+    path: "/clients/:slug",
+    element: (
+      <Suspense>
+        <SingleClientView />
       </Suspense>
     )
   },
@@ -111,13 +127,11 @@ function App() {
         headers: {
           'Accept': 'application/json',
           "Content-Type": "application/json",
-          Authorization: "bearer " + token,
+          Authorization: "Bearer " + token
       },
     };
       const result = await fetch(`http://127.0.0.1:3001/login/userinfos`, options);
       let data = await result.json();
-      console.log("data");
-      console.log(data);
       if (data.message !== "Token invalide") {
         setUserLog(data);
       }
@@ -131,7 +145,7 @@ function App() {
 
   return (
     <div className="App">
-      <UserConnect.Provider value={{ userLog, setUserLog, getUser, disconnect }}>
+      <UserConnect.Provider value={{ userLog, setUserLog, disconnect }}>
         <RouterProvider router={router} />
       </UserConnect.Provider>
     </div>

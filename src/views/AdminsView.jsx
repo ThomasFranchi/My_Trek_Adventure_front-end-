@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Link } from 'react-router-dom';
+import { UserConnect } from "../App";
 import AdminRegister from "../components/organisms/AdminRegister";
 
 function AdminsView() {
   const [isConnected, setIsConnected] = useState(false);
-
+  const {userLog} = useContext(UserConnect);
   return (
     <div>
-      <AdminRegister/>
+      {!userLog && (
+        <>
+          <p>Vous n'avez pas l'autorisation d'accéder à cette page</p>
+          <p><Link to="/">Retour à l'accueil</Link></p>
+        </>
+      )}
+      {userLog && (
+        <>
+          <AdminRegister/>
+        </>
+      )} 
     </div>
   );
 }

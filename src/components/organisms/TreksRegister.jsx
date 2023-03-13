@@ -1,25 +1,60 @@
+import { useState, useEffect } from "react";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
-const { useState } = require("react");
 
 function TreksRegister() {
-  const [newTreck, setNewTreck] = useState({
+  const [newTrek, setNewTrek] = useState({
+    parcours: "",
+    guide: "",
     beginDate: "",
     endDate: "",
     minPlaces: "",
     maxPlaces: "",
   });
 
+  const [parcoursList, setParcoursList] = useState([]);
+  const [guidesList, setGuidesList] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  useEffect(() => {getParcoursAndGuides()}, [])
+
   function handleChange(e) {
-    setNewTreck({ ...newTreck, [e.target.name]: e.target.value });
+    setNewTrek({ ...newTrek, [e.target.name]: e.target.value });
+    console.log(e.target.value);
+  }
+
+  // Get parcours and guides
+  async function getParcoursAndGuides ()
+  {
+    const parcoursResponse = await fetch('http://localhost:3001/parcours');
+    const parcoursData = await parcoursResponse.json();
+    if (!parcoursData) 
+    {
+      setParcoursList([]);
+    }
+
+    if (Array.isArray(parcoursData)) 
+    {
+      setParcoursList(parcoursData);
+    }
+
+    const guidesResponse = await fetch('http://localhost:3001/guides');
+    const guidesData = await guidesResponse.json();
+    if (!guidesData) 
+    {
+      setGuidesList([]);
+    }
+
+    if (Array.isArray(guidesData)) 
+    {
+      setGuidesList(guidesData);
+    }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(newTreck);
+    console.log(newTrek);
 
     const token = localStorage.getItem("token");
 
@@ -27,9 +62,9 @@ function TreksRegister() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: "bearer " + token,
+        Authorization: "Bearer " + token,
       },
-      body: JSON.stringify(newTreck),
+      body: JSON.stringify(newTrek)
     };
 
     // Post data to DB on /login routes
@@ -39,13 +74,11 @@ function TreksRegister() {
 
     if (!data.success) {
       setSuccessMessage(null);
-      setErrorMessage(data.message);
       return;
     }
-
-    setSuccessMessage(data.message);
     setErrorMessage(null);
-    setNewTreck({
+    setNewTrek({
+
       beginDate: "",
       endDate: "",
       minPlaces: "",
@@ -57,28 +90,28 @@ function TreksRegister() {
     {
       name: "beginDate",
       label: "date de départ",
-      value: newTreck.beginDate,
+      value: newTrek.beginDate,
       required: "{true}",
       type: "date",
     },
     {
         name: "endDate",
         label: "date d'arrivée",
-        value: newTreck.endDate,
+        value: newTrek.endDate,
         required: "{true}",
         type: "date",
     },
     {
         name: "minPlaces",
         label: "min (place)",
-        value: newTreck.minPlaces,
+        value: newTrek.minPlaces,
         required: "{true}",
         type: "number",
     },
     {
         name: "maxPlaces",
         label: "max (place)",
-        value: newTreck.maxPlaces,
+        value: newTrek.maxPlaces,
         required: "{true}",
         type: "number",
     },
@@ -88,6 +121,28 @@ return (
     <div>
       <h3>Ajouter un nouveau Trek </h3>
       <form onSubmit={handleSubmit}>
+      <label>Parcours</label>
+      <select
+        name="parcours"
+        value={newTrek.parcours}
+        required="{true}"
+        onChange={handleChange}
+      >
+        {parcoursList.map((parcours) => (
+          <option value={parcours.slug}> {parcours.name} </option>        
+            ))}
+      </select>,
+      <label>Guide</label>
+      <select
+        name="guide"
+        value={newTrek.guide}
+        required="{true}"
+        onChange={handleChange}
+      >
+        {guidesList.map((guide) => (
+          <option value={guide.slug}> {`${guide.firstName} ${guide.lastName}`}</option>        
+            ))}
+      </select>
         <div>
           {itemsArray.map((item) => (
             <Input
