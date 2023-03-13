@@ -31,6 +31,7 @@ function Login() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "bearer " + token,
       },
       body: JSON.stringify(user),
     };

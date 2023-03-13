@@ -17,6 +17,8 @@ export default function TreksView() {
 
   async function displayTreksList()
   {
+    let token = localStorage.getItem("token");
+
     const options = 
     {
         method: 'GET',
@@ -24,7 +26,7 @@ export default function TreksView() {
         {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            Authorization: "Bearer " + localStorage.getItem("token")
+            Authorization: "Bearer " + token
         }
     };
     const response = await fetch('http://localhost:3001/treks', options);

@@ -15,14 +15,17 @@ function ClientsView() {
 
   async function displayClientsList()
   {
+    let token = localStorage.getItem("token");
+
     const options = 
     {
+      
         method: 'GET',
         headers: 
         {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            Authorization: "Bearer " + localStorage.getItem("token")
+            Authorization: "Bearer " + token
         }
     };
     const response = await fetch('http://localhost:3001/clients/',options);

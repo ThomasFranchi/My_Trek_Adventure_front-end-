@@ -17,6 +17,8 @@ function Parcours ({name, beginDate, endDate, parcoursID, guideID, minPlaces, ma
 
   async function getParcoursAndGuideFromIds()
   {
+    let token = localStorage.getItem("token");
+
     const options = 
     {
         method: 'GET',
@@ -24,7 +26,7 @@ function Parcours ({name, beginDate, endDate, parcoursID, guideID, minPlaces, ma
         {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            Authorization: "Bearer " + localStorage.getItem("token")            
+            Authorization: "Bearer " + token         
         }
     };
     const parcoursResponse = await fetch("http://localhost:3001/parcours/get/:" + new URLSearchParams ({id: parcoursID}), options);
