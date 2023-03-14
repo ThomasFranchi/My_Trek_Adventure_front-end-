@@ -23,15 +23,16 @@ function StepsRegister() {
     e.preventDefault();
     console.log(newStep);
 
+    const formData = new FormData(e.target);
+
     const token = localStorage.getItem("token");
 
     let options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: "bearer " + token,
       },
-      body: JSON.stringify(newStep),
+      body: formData,
     };
 
     // Post data to DB on /login routes

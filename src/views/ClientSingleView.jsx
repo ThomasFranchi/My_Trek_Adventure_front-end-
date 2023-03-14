@@ -98,7 +98,6 @@ function SingleClientView() {
       <Topbar />
       <h1>Page de {client.firstName} {client.lastName}</h1>
       <div id="postClient">
-        <div><p> ICI LA PHOTO </p></div>
         <img style = {{width: 10+'%'}} src={image} alt = "Photo de profil de l'utilisateur"/>
         <div className="content">
             <div className="clientInfos">

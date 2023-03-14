@@ -63,7 +63,7 @@ function ParcoursView() {
             {parcoursList.map((parcours) => (
               <Parcours 
                 key = {parcours.slug}
-                picture = {parcours.picture} 
+                parcoursPicture = {parcours.parcoursPicture} 
                 name = {parcours.name} 
                 duration = {parcours.duration} 
                 description = {parcours.description}
