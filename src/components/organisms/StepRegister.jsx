@@ -2,7 +2,7 @@ import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 const { useState } = require("react");
 
-function StepsRegister() {
+function StepsRegister({parcoursSlug}) {
   const [newStep, setNewStep] = useState({
     stepName: "",
     stepLatitude: "",
@@ -24,11 +24,11 @@ function StepsRegister() {
     console.log(newStep);
 
     const formData = new FormData(e.target);
-
+    formData.append("slug", parcoursSlug);
     const token = localStorage.getItem("token");
 
     let options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         Authorization: "bearer " + token,
       },
@@ -77,7 +77,7 @@ function StepsRegister() {
       value: newStep.stepLatitude,
       required: "{true}",
       type: "number",
-      min: 0,
+      step: "any",
     },
     {
       name: "stepLongitude",
@@ -85,10 +85,10 @@ function StepsRegister() {
       value: newStep.stepLongitude,
       required: "{true}",
       type: "number",
-      min: 0,
+      step: "any",
     },
     {
-      name: "description",
+      name: "stepDescription",
       label: "Description",
       value: newStep.stepDescription,
       required: "{true}",

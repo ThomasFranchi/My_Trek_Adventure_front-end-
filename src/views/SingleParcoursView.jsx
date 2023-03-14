@@ -145,7 +145,6 @@ function SingleParcoursView() {
         <PopupAlert type = "ce parcours" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
       )}
       <Button onClick = {() => backToParcoursList()}>Retour aux parcours</Button>
-      <Footer />
     </div>
   );
 }

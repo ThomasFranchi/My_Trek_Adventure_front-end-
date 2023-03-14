@@ -6,7 +6,7 @@ import ParcoursRegister from "../components/organisms/ParcoursRegister";
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 import Parcours from "../components/Parcours";
-
+import "../styles/styleParcoursView.css";
 import { UserConnect } from "../App";
 
 function ParcoursView() {
@@ -46,7 +46,7 @@ function ParcoursView() {
   }
 
   return (
-    <div>
+    <div className="parcoursViewContainer">
       {!userLog && (
         <>
           <p>Vous n'avez pas l'autorisation d'accéder à cette page</p>
@@ -73,7 +73,7 @@ function ParcoursView() {
                 />        
             ))}
         </div>
-        <Footer />
+       
         </>
       )}
     </div>

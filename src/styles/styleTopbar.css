@@ -1,14 +1,16 @@
 /* General */
-#topbar
-{
+#topbar {
   display: flex;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   flex-direction: row;
   width: 100vw;
 }
 
-.topbar-line
-{
+.topbar-line {
   display: inline-flex;
   justify-content: space-between;
   flex-direction: row;
@@ -18,8 +20,7 @@
   align-items: center;
 }
 
-.logo
-{
+.logo {
   object-fit: contain;
   max-width: 12%;
   height: auto;
@@ -27,44 +28,39 @@
 }
 
 /* Partie Commune */
-.linkDiv
-{
+.linkDiv {
   margin: 0px 20px;
 }
 
-.link
-{
+.link {
+  transition: 0.3s;
   vertical-align: middle;
   text-decoration: none;
   font-size: 22px;
   color: #095228;
-  width:100%;
-  padding-bottom:15px;
+  width: 100%;
+  padding-bottom: 15px;
 }
 
-.link:hover
-{
+.link:hover {
   border-bottom: 2px solid #582900;
-  padding-bottom:15px;
+  padding-bottom: 15px;
   font-size: 20px;
 }
-.sideIcon
-{
+.sideIcon {
   max-width: 10%;
-  vertical-align:middle;
+  vertical-align: middle;
   margin: 0px 15px;
 }
 
 /* Connecté */
 
-.userIcon
-{
+.userIcon {
   width: 5%;
   height: auto;
 }
 
-.line
-{
+.line {
   display: inline-flex;
   color: #ffffff;
   margin: 0px 25px;
@@ -76,15 +72,13 @@
 @media screen and (max-width: 1280px) {
   .link {
     font-size: 0px;
-    width:0%;
+    width: 0%;
   }
-  .link:hover
-  {
+  .link:hover {
     font-size: 0px;
-    width:0%;
+    width: 0%;
   }
-  .sideIcon
-  {
+  .sideIcon {
     max-width: 50%;
   }
 }
