@@ -14,6 +14,7 @@ function SingleGuideView() {
   useEffect(() => {displayGuide()}, [])
   const navigate = useNavigate();
 
+  let image; 
   async function displayGuide()
   {
     let token = localStorage.getItem("token");
@@ -33,11 +34,19 @@ function SingleGuideView() {
       setGuide({});
     }
     setGuide(data);
+    console.log(data.guidePicture);
   }
 
   function backToGuidesList()
   {
     navigate("/guides");
+  }
+
+  function setImageLink(profilePicture)
+  {
+    image = "http://localhost:3001"+ profilePicture;
+    console.log(image);
+    //return image;
   }
 
   function setAlertState (state)
@@ -77,12 +86,14 @@ function SingleGuideView() {
     }
   }
 
+  setImageLink(guide.guidePicture);
+
   return (
     <div>
       <Topbar />
       <h1>Page de {guide.firstName} {guide.lastName}</h1>
       <div id="postGuide">
-        <div><p> ICI LA PHOTO </p></div>
+      <img style = {{width: 10+'%'}} src={image} alt = "Photo de profil du guide"/>
         <div className="content">
             <div className="guideInfos">
               <p><span className="guideInfo">Nom :</span> {guide.firstName} </p>

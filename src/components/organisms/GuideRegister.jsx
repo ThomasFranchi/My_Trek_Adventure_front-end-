@@ -25,6 +25,8 @@ function GuideRegister() {
     e.preventDefault();
     console.log(newGuide);
 
+    const formData = new FormData(e.target);
+
     // const {
     //   firstName,
     //   lastName,
@@ -44,10 +46,9 @@ function GuideRegister() {
     let options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: "bearer " + token,
       },
-      body: JSON.stringify(newGuide),
+      body: formData,
     };
 
     // Post data to DB on /login routes

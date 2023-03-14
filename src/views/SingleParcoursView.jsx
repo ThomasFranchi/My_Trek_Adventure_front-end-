@@ -17,6 +17,7 @@ function SingleParcoursView() {
   const navigate = useNavigate();
   useEffect(() => {displayParcours()}, [])
   
+  let image; 
   let difficultyLevel;
   async function displayParcours()
   {
@@ -42,6 +43,13 @@ function SingleParcoursView() {
   function backToParcoursList()
   {
     navigate("/parcours");
+  }
+
+  function setImageLink(parcoursPicture)
+  {
+    image = "http://localhost:3001"+ parcoursPicture;
+    console.log(image);
+    //return image;
   }
 
   async function setDifficulty (difficulty)
@@ -99,7 +107,7 @@ function SingleParcoursView() {
       backToParcoursList();
     }
   }
-
+  setImageLink(parcours.parcoursPicture);
   setDifficulty(parcours.difficulty);
 
   return (
@@ -108,7 +116,7 @@ function SingleParcoursView() {
       <h1>Page du parcours {parcours.name}</h1>
       <div id="post">
         <div>
-          <img className = "parcoursImage" src = {parcours.picture} alt = "Photos du parcours"></img>
+        <img style = {{width: 10+'%'}} src={image} alt = "Photo du parcours"/>
         </div>
         <div className="content">
             <div className="gameInfos">

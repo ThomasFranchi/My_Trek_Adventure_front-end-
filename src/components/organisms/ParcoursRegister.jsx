@@ -24,15 +24,16 @@ function ParcoursRegister() {
     e.preventDefault();
     console.log(newParcour);
 
+    const formData = new FormData(e.target);
+
     const token = localStorage.getItem("token");
 
     let options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: "bearer " + token,
       },
-      body: JSON.stringify(newParcour),
+      body: formData,
     };
 
     // Post data to DB on /login routes
