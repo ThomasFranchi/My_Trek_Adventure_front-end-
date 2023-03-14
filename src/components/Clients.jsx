@@ -13,7 +13,6 @@ function Clients (
 
   function goToClientPage ()
   {
-    console.log(slug);
     navigate('/clients/'+slug);
   }
 

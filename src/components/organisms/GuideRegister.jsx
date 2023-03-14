@@ -40,6 +40,7 @@ console.log(newGuide)
 
     const token = localStorage.getItem("token");
 
+
     let options = {
       method: "POST",
       headers: {

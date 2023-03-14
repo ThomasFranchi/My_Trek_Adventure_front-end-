@@ -23,8 +23,7 @@ function Guides (
       <div><p> ICI LA PHOTO DE PROFIL </p></div>
       <div className="content">
           <div className="guideInfos">
-            <p><span className="guideInfo">Nom :</span> {firstName} </p>
-            <p><span className="guideInfo">Prénom :</span> {lastName} </p>
+            <p><span className="guideInfo">Prénom Nom :</span> {firstName} {lastName} </p>
             <p><span className="guideInfo">mail :</span> {mail} </p>
             <p><span className="guideInfo">Années d'expériences :</span> {experienceYears} </p>
             <p><span className="guideInfo">Etat :</span> {state} </p>

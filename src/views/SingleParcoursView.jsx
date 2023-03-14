@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 import emptyStar from "../pictures/ico_emptyStar.png";
 import fullStar from "../pictures/ico_fullStar.png";
 
+import Button from "../components/atoms/Button";
+import PopupAlert from "../components/organisms/PopupAlert";
 
 function SingleParcoursView() {
   const [parcours, setParcours] = useState({})
+  const [deleteAlert, setDeleteAlert] = useState(false);
   let params = useParams();
+  const navigate = useNavigate();
   useEffect(() => {displayParcours()}, [])
-
+  
   let difficultyLevel;
   async function displayParcours()
   {
@@ -34,6 +38,11 @@ function SingleParcoursView() {
     setParcours(data);
   }
 
+  function backToParcoursList()
+  {
+    navigate("/parcours");
+  }
+
   async function setDifficulty (difficulty)
   {
     switch (difficulty)
@@ -49,6 +58,45 @@ function SingleParcoursView() {
         break;
     }
     return difficultyLevel;
+  }
+
+  function setAlertState (state)
+  {
+    setDeleteAlert(state);
+  }
+  
+  // Cancel a customer deletion
+  function cancelDelete()
+  {
+    setAlertState(false);
+  }
+
+  // Confirm a customer deletion
+  async function confirmDelete()
+  {
+    let token = localStorage.getItem("token");
+    const options = 
+    {
+      method: 'DELETE',
+      headers: 
+      {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          Authorization : "Bearer " + token
+      },
+      body: JSON.stringify({
+          slug: params.slug
+      })
+    };
+    const response = await fetch(`http://localhost:3001/parcours/delete/`, options);
+    const data = await response.json();
+    console.log(data);
+    console.log(data.status);
+    if (data.status === "200") 
+    {
+      setAlertState(false);
+      backToParcoursList();
+    }
   }
 
   setDifficulty(parcours.difficulty);
@@ -81,6 +129,10 @@ function SingleParcoursView() {
             </div>
         </div>  
       </div>
+      {deleteAlert &&(
+        <PopupAlert type = "ce parcours" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
+      )}
+      <Button onClick = {() => backToParcoursList()}>Retour aux parcours</Button>
       <Footer />
     </div>
   );

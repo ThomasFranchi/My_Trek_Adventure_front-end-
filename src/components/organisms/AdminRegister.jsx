@@ -6,7 +6,6 @@ function AdminRegister() {
   const [newAdmin, setNewAdmin] = useState({
     mail: "",
     password: "",
-
   });
 
   const [successMessage, setSuccessMessage] = useState(null);
@@ -40,7 +39,7 @@ console.log(newAdmin)
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: "bearer " + token,
+        Authorization: "bearer " + token,
       },
       body: JSON.stringify(newAdmin),
     };
