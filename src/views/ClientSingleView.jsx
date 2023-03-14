@@ -9,13 +9,14 @@ import PopupAlert from "../components/organisms/PopupAlert";
 
 function SingleClientView() {
   const [client, setClient] = useState({})
-  
   const [deleteAlert, setDeleteAlert] = useState(false);
+
   let params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {displayClient()}, [])
   
+  let image;
   async function displayClient()
   {
     let token = localStorage.getItem("token");
@@ -28,17 +29,24 @@ function SingleClientView() {
     };
     const response = await fetch(`http://localhost:3001/clients/${params.slug}`, options);
     const data = await response.json();
-    console.log(data);
     if (!data) 
     {
       setClient({});
     }
     setClient(data);
+    console.log(data.clientPicture);
   }
 
   function backToClientsList()
   {
     navigate("/clients");
+  }
+
+  function setImageLink(profilePicture)
+  {
+    image = "http://localhost:3001"+ profilePicture;
+    console.log(image);
+    //return image;
   }
 
   function updateClient ()
@@ -60,13 +68,15 @@ function SingleClientView() {
   // Confirm a customer deletion
   async function confirmDelete()
   {
+    let token = localStorage.getItem("token");
     const options = 
     {
       method: 'DELETE',
       headers: 
       {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization : "Bearer " + token
       },
       body: JSON.stringify({
           slug: params.slug
@@ -74,8 +84,6 @@ function SingleClientView() {
     };
     const response = await fetch(`http://localhost:3001/clients/delete/`, options);
     const data = await response.json();
-    console.log(data);
-    console.log(data.status);
     if (data.status === "200") 
     {
       setAlertState(false);
@@ -83,17 +91,18 @@ function SingleClientView() {
     }
   }
 
+  setImageLink(client.clientPicture);
+
   return (
     <div>
       <Topbar />
       <h1>Page de {client.firstName} {client.lastName}</h1>
       <div id="postClient">
         <div><p> ICI LA PHOTO </p></div>
-        <img style = {{width: 10+'%'}} src = {client.profilePicture} alt = "Photo de profil de l'utilisateur"/>
+        <img style = {{width: 10+'%'}} src={image} alt = "Photo de profil de l'utilisateur"/>
         <div className="content">
             <div className="clientInfos">
-              <p><span className="clientInfo">Nom :</span> {client.firstName} </p>
-              <p><span className="clientInfo">Prénom :</span> {client.lastName} </p>
+              <p><span className="clientInfo">Nom Prénom :</span> {client.firstName} {client.lastName}</p>
               <p><span className="clientInfo">Mail :</span> {client.mail} </p>
               <p><span className="clientInfo">Mot de passe :</span> {client.password} </p>
               <div className="clientInfos">

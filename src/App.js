@@ -5,12 +5,14 @@ import "./styles/App.css";
 const Home = lazy(() => import("./views/Home"));
 const Error = lazy(() => import("./views/Error"));
 const ParcoursView = lazy(() => import("./views/ParcoursView"));
-const TreksView = lazy(()=> import("./views/TreksView"));
 const SingleParcoursView = lazy(() => import("./views/SingleParcoursView"));
-const SingleGuideView = lazy(() => import("./views/SingleGuideView"));
+const TreksView = lazy(()=> import("./views/TreksView"));
+const SingleTrekView = lazy(() => import("./views/TrekSingleView"));
 const GuidesView = lazy(() => import("./views/GuidesView"));
+const SingleGuideView = lazy(() => import("./views/SingleGuideView"));
 const ClientsView = lazy(() => import("./views/ClientsView"));
 const SingleClientView = lazy(() => import("./views/ClientSingleView"));
+const ProfileView = lazy(() => import("./views/ProfileView"));
 const AdminsView = lazy(() => import("./views/AdminsView"));
 
 const router = createBrowserRouter([
@@ -51,7 +53,7 @@ const router = createBrowserRouter([
     path: "/treks/:slug",
     element: (
       <Suspense>
-        <TreksView />
+        <SingleTrekView />
       </Suspense>
     )
   },
@@ -88,21 +90,21 @@ const router = createBrowserRouter([
     )
   },
   {
+    path: "/my-profile",
+    element: (
+      <Suspense>
+        <ProfileView />
+      </Suspense>
+    )
+  },
+  {
     path: "/administrator",
     element: (
       <Suspense>
         <AdminsView />
       </Suspense>
     )
-  },
-  {
-    path: "/treks/",
-    element: (
-      <Suspense>
-        <TreksView />
-      </Suspense>
-    )
-  },
+  }
 ]);
 
 export const UserConnect = createContext();

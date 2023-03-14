@@ -25,29 +25,34 @@ function TreksRegister() {
   }
 
   // Get parcours and guides
-  async function getParcoursAndGuides ()
-  {
-    const parcoursResponse = await fetch('http://localhost:3001/parcours');
+  async function getParcoursAndGuides () {
+    const token = localStorage.getItem("token");
+
+    let options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + token,
+      }
+    };
+
+    const parcoursResponse = await fetch('http://localhost:3001/parcours', options);
     const parcoursData = await parcoursResponse.json();
-    if (!parcoursData) 
-    {
+    if (!parcoursData) {
       setParcoursList([]);
     }
 
-    if (Array.isArray(parcoursData)) 
-    {
+    if (Array.isArray(parcoursData)) {
       setParcoursList(parcoursData);
     }
 
-    const guidesResponse = await fetch('http://localhost:3001/guides');
+    const guidesResponse = await fetch('http://localhost:3001/guides', options);
     const guidesData = await guidesResponse.json();
-    if (!guidesData) 
-    {
+    if (!guidesData) {
       setGuidesList([]);
     }
 
-    if (Array.isArray(guidesData)) 
-    {
+    if (Array.isArray(guidesData)) {
       setGuidesList(guidesData);
     }
   }
@@ -121,42 +126,48 @@ return (
     <div>
       <h3>Ajouter un nouveau Trek </h3>
       <form onSubmit={handleSubmit}>
-      <label>Parcours</label>
-      <select
-        name="parcours"
-        value={newTrek.parcours}
-        required="{true}"
-        onChange={handleChange}
-      >
+      <div>
+        <label>Parcours</label>
+        <select
+          name="parcours"
+          value={newTrek.parcours}
+          required="{true}"
+          onChange={handleChange}
+        >
+        <option value="" selected disabled hidden>Choisissez un parcours</option>
         {parcoursList.map((parcours) => (
           <option value={parcours.slug}> {parcours.name} </option>        
             ))}
-      </select>,
-      <label>Guide</label>
-      <select
-        name="guide"
-        value={newTrek.guide}
-        required="{true}"
-        onChange={handleChange}
-      >
+        </select>
+      </div>
+      <div>
+        <label>Guide</label>
+        <select
+          name="guide"
+          value={newTrek.guide}
+          required="{true}"
+          onChange={handleChange}
+        >
+        <option value="" selected disabled hidden>Choisissez un guide</option>
         {guidesList.map((guide) => (
           <option value={guide.slug}> {`${guide.firstName} ${guide.lastName}`}</option>        
             ))}
-      </select>
-        <div>
-          {itemsArray.map((item) => (
-            <Input
-              name={item.name}
-              label={item.label}
-              value={item.value}
-              required={item.required}
-              type={item.type}
-              onChange={handleChange}
-              min={item.min}
-              max={item.max}
-            />
-          ))}
-        </div>
+        </select>
+      </div>
+      <div>
+        {itemsArray.map((item) => (
+          <Input
+            name={item.name}
+            label={item.label}
+            value={item.value}
+            required={item.required}
+            type={item.type}
+            onChange={handleChange}
+            min={item.min}
+            max={item.max}
+          />
+        ))}
+      </div>
 
         <Button> Enregistrer</Button>
         {errorMessage !== null && <p>{errorMessage}</p>}

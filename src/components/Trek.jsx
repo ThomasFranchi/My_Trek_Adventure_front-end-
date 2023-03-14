@@ -5,7 +5,7 @@ import fullStar from "../pictures/ico_fullStar.png";
 
 import Button from "./atoms/Button";
 
-function Parcours ({name, beginDate, endDate, parcoursID, guideID, minPlaces, maxPlaces, slug}) 
+function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, minPlaces, maxPlaces, slug}) 
 {
   const [errorMsg, setErrorMsg] = useState ("");
   const [guide, setGuide] = useState ([]);
@@ -55,17 +55,14 @@ function Parcours ({name, beginDate, endDate, parcoursID, guideID, minPlaces, ma
 
   return (
     <div id="post"><div className="content">
-          <div className="gameInfos">
-            <p><span className="userInfo">Sur le parcours </span> {parcours.name}</p>
-            <p><span className="userInfo">Animé par </span> {guide.firstName} {guide.lastName}</p>
-            <p><span className="userInfo">Date de début :</span> {beginDate} </p>
-            <p><span className="userInfo">Date de fin :</span> {endDate}</p>
-            <p><span className="userInfo">Places minimum :</span> {minPlaces} places</p>
-            <p><span className="userInfo">Places maximium :</span> {maxPlaces} places</p>
-          </div>
-          <div className="gameInfos">
-            <Button onClick = {goToTrekPage}>Voir le trek</Button>
-          </div>
+      <div className="gameInfos">
+        <p>{trekName}</p>
+          <p><span className="userInfo">Sur le parcours </span> {parcours.name}</p>
+          <p><span className="userInfo">Animé par </span> {guide.firstName} {guide.lastName}</p>
+        </div>
+        <div className="gameInfos">
+          <Button onClick = {goToTrekPage}>Voir le trek</Button>
+        </div>
       </div>  
     </div> 
   );
