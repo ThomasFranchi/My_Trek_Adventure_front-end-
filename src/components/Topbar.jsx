@@ -17,9 +17,9 @@ export default function Topbar()
   const navigate=useNavigate();
   const {userLog, disconnect} = useContext(UserConnect);
 
-  function login()
+  function goToProfile()
   {
-    navigate("/login");
+    navigate("/my-profile");
   }
 
   function logout()
@@ -33,9 +33,9 @@ export default function Topbar()
       <div className="topbar-line">
         <img className="logo" src={logo} alt="Logo Site"></img>   
         <nav className="topbar-line">
-          <div className="linkDiv">
+          {!userLog && ( <div className="linkDiv">
             <Link className="link" to="/"><img className="sideIcon" src={icoHome} alt="Icone de l'Accueil"></img> Accueil</Link>
-          </div>
+          </div>)}
           <div className="linkDiv">
             <Link className="link" to="/parcours/"><img className="sideIcon" src={icoParcours} alt="Icone des parcours"></img> Parcours</Link>
           </div>
@@ -52,7 +52,7 @@ export default function Topbar()
           )}
           <div>
             <button onClick={logout}>Deconnexion</button>
-            {userLog.role === "guide" && ( <button onClick={null}>Mon profil</button> )}
+            {userLog.role === "guide" && ( <button onClick={goToProfile}>Mon profil</button> )}
             </div>
         </nav>
       </div>   

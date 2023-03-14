@@ -63,6 +63,7 @@ export default function TreksView() {
             {treksList.map((trek) => (
               <Trek 
                 key = {trek.slug}
+                trekName = {trek.trekName}
                 beginDate = {trek.beginDate} 
                 endDate = {trek.endDate} 
                 parcoursID = {trek.parcoursID} 

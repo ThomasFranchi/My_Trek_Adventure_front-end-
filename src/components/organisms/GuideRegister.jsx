@@ -40,6 +40,7 @@ function GuideRegister() {
 
     const token = localStorage.getItem("token");
 
+
     let options = {
       method: "POST",
       headers: {
