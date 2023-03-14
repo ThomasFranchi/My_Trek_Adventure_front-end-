@@ -131,7 +131,7 @@ function SingleParcoursView() {
         </div>
       </div>
       mvp
-      <StepsRegister />
+      <StepsRegister parcoursSlug = {parcours.slug}/>
       {/*to-do afficher liste d'étapes*/}
       {deleteAlert &&(
         <PopupAlert type = "ce parcours" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 

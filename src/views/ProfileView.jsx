@@ -121,6 +121,7 @@ function ProfileView() {
       {treksList.map((trek) => (
       <GuideDate 
       trekName = {trek.trekName}
+      parcoursID = {trek.parcoursID}
       trekDate = {trek.beginDate}
       trekBookings = {trek.bookings}
       state = {trek.trekState}
