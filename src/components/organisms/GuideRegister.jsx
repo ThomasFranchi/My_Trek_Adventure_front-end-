@@ -10,7 +10,7 @@ function GuideRegister() {
     password: "",
     description: "",
     experienceYears: 0,
-    profilePicture: "",
+    guidePicture: "",
   });
 
   const [successMessage, setSuccessMessage] = useState(null);
@@ -23,7 +23,7 @@ function GuideRegister() {
   // Submit input to DB to create a new Game
   async function handleSubmit(e) {
     e.preventDefault();
-console.log(newGuide)
+    console.log(newGuide);
 
     // const {
     //   firstName,
@@ -33,7 +33,7 @@ console.log(newGuide)
     //   description,
     //   experienceYears,
     //   profilePicture,
-  
+
     // } = newGuide;
 
     // Fetch options
@@ -69,11 +69,19 @@ console.log(newGuide)
       password: "",
       description: "",
       experienceYears: 0,
-      profilePicture: ""
+      guidePicture: "",
     });
   }
 
   const itemsArray = [
+    {
+      name: "guidePicture",
+      type: "file",
+      label: "Photo de profil",
+      value: newGuide.guidePicture,
+      required: "{true}",
+      accept:"image/jpeg,image/png, image/jpg",
+    },
     {
       name: "firstName",
       label: "Prénom",
@@ -86,19 +94,19 @@ console.log(newGuide)
       value: newGuide.lastName,
       required: "{true}",
     },
-    { name: "mail", label: "Email", value: newGuide.mail, required: "{true}", type: "email" },
+    {
+      name: "mail",
+      label: "Email",
+      value: newGuide.mail,
+      required: "{true}",
+      type: "email",
+    },
     {
       name: "password",
       label: "Mot de passe",
       value: newGuide.password,
       required: "{true}",
-      type: "password"
-    },
-    {
-      name: "description",
-      label: "Description",
-      value: newGuide.description,
-      required: "{true}",
+      type: "password",
     },
     {
       name: "experienceYears",
@@ -108,9 +116,9 @@ console.log(newGuide)
       type: "number",
     },
     {
-      name: "profilePicture",
-      label: "Photo de profil",
-      value: newGuide.profilePicture,
+      name: "description",
+      label: "Description",
+      value: newGuide.description,
       required: "{true}",
     },
   ];
@@ -118,7 +126,7 @@ console.log(newGuide)
   return (
     <div>
       <h3>Ajouter un nouveau guide </h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         {itemsArray.map((item) => (
           <Input
             name={item.name}
@@ -130,11 +138,10 @@ console.log(newGuide)
           />
         ))}
 
-<Button> Enregistrer</Button>
-{errorMessage !== null && <p>Erreur: {errorMessage}</p>}
-      {successMessage !== null && <p>{successMessage}</p>}
+        <Button> Enregistrer</Button>
+        {errorMessage !== null && <p>Erreur: {errorMessage}</p>}
+        {successMessage !== null && <p>{successMessage}</p>}
       </form>
-   
     </div>
   );
 }

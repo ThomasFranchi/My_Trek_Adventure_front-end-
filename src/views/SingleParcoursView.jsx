@@ -5,6 +5,7 @@ import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 import emptyStar from "../pictures/ico_emptyStar.png";
 import fullStar from "../pictures/ico_fullStar.png";
+import StepsRegister from "../components/organisms/StepRegister";
 
 
 function SingleParcoursView() {
@@ -79,8 +80,10 @@ function SingleParcoursView() {
             <div className="gameInfos">
               <p><span className="userInfo">Description :</span> {parcours.description}</p>
             </div>
-        </div>  
+        </div>
       </div>
+      <StepsRegister />
+    {/*to-do afficher liste d'étapes*/}
       <Footer />
     </div>
   );

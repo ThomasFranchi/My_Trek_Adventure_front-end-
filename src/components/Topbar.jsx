@@ -6,6 +6,7 @@ import icoParcours from "../pictures/ico_parcours.png"
 import icoTrek from "../pictures/ico_treks.png"
 import icoGuide from "../pictures/ico_guides.png"
 import icoClient from "../pictures/ico_clients.png"
+import logo from "../pictures/logo.png"
 import '../styles/styleTopbar.css';
 
 import { UserConnect } from "../App";
@@ -30,7 +31,7 @@ export default function Topbar()
   return (
     <div id="topbar">
       <div className="topbar-line">
-        <img className="logo" src={null} alt="Logo Site"></img>   
+        <img className="logo" src={logo} alt="Logo Site"></img>   
         <nav className="topbar-line">
           <div className="linkDiv">
             <Link className="link" to="/"><img className="sideIcon" src={icoHome} alt="Icone de l'Accueil"></img> Accueil</Link>
