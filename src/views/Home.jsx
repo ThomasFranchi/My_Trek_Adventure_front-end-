@@ -5,17 +5,19 @@ import Button from "../components/atoms/Button";
 import Login from "../components/organisms/Login";
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
+import '../styles/home.css';
 import { UserConnect } from "../App";
 
 import Logo_Google from "../pictures/logo_GooglePlay.png";
 import Logo_Apple from "../pictures/logo_AppleStore.png";
+import homebackg from "../pictures/homebackg.jpg"; 
 
 function Home() {
   const [displayLoginForm, setDisplayLoginForm] = useState(false);
   const {userLog} = useContext(UserConnect);
   console.log({userLog});
   return (
-    <div>
+    <div className="homecontainer" style={{ backgroundImage:`url(${homebackg})` }}>
       {userLog && (
         <>
           <Topbar />
@@ -24,8 +26,8 @@ function Home() {
       <p>Vous êtes client ? </p>
       <p>Une application est disponible pour vous sur le Google Play Store pour Android et sur l'Apple Store pour IOS.</p>
       <div>
-        <img src = {Logo_Google} alt = "Logo Google Play Store"></img>
-        <img src = {Logo_Apple} alt = "Logo Apple Store"></img>
+        <img className="logohp" src = {Logo_Google} alt = "Logo Google Play Store"></img>
+        <img className="logohp" src = {Logo_Apple} alt = "Logo Apple Store"></img>
       </div>
       {!userLog && (
         <>

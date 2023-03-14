@@ -2,17 +2,14 @@
 #topbar
 {
   display: flex;
+  background-color: rgba(255, 255, 255, 0.1);
   flex-direction: row;
   width: 100vw;
-  background-color: #582f13;
-  padding: 0px 15px;
-  z-index: 10;
 }
 
 .topbar-line
 {
   display: inline-flex;
-  color: #ffffff;
   justify-content: space-between;
   flex-direction: row;
   margin: 5px 25px;
@@ -24,7 +21,7 @@
 .logo
 {
   object-fit: contain;
-  max-width: 10%;
+  max-width: 12%;
   height: auto;
   vertical-align: middle;
 }
@@ -39,17 +36,17 @@
 {
   vertical-align: middle;
   text-decoration: none;
-  font-size: 24px;
-  color: #ffffff;
+  font-size: 22px;
+  color: #095228;
   width:100%;
   padding-bottom:15px;
 }
 
 .link:hover
 {
-  border-bottom: 5px solid #4a5cff;
+  border-bottom: 2px solid #582900;
   padding-bottom:15px;
-  font-size: 28px;
+  font-size: 20px;
 }
 .sideIcon
 {

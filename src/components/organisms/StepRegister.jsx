@@ -2,27 +2,26 @@ import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 const { useState } = require("react");
 
-function ParcoursRegister() {
-  const [newParcour, setNewParcour] = useState({
-    name: "",
-    duration: "",
-    description: "",
-    price: "",
-    parcoursPicture: "",
-    difficulty: 0,
+function StepsRegister() {
+  const [newStep, setNewStep] = useState({
+    stepName: "",
+    stepLatitude: "",
+    stepLongitude: "",
+    stepPicture: "",
+    stepDescription: "",
   });
 
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   function handleChange(e) {
-    setNewParcour({ ...newParcour, [e.target.name]: e.target.value });
+    setNewStep({ ...newStep, [e.target.name]: e.target.value });
   }
 
   // Submit input to DB to create a new Game
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(newParcour);
+    console.log(newStep);
 
     const token = localStorage.getItem("token");
 
@@ -32,11 +31,11 @@ function ParcoursRegister() {
         "Content-Type": "application/json",
         Authorization: "bearer " + token,
       },
-      body: JSON.stringify(newParcour),
+      body: JSON.stringify(newStep),
     };
 
     // Post data to DB on /login routes
-    const result = await fetch("http://127.0.0.1:3001/parcours/add", options);
+    const result = await fetch("http://127.0.0.1:3001/parcours/addstep", options);
     // Response from DB on /login routes
     const data = await result.json();
 
@@ -48,42 +47,41 @@ function ParcoursRegister() {
 
     setSuccessMessage(data.message);
     setErrorMessage(null);
-    setNewParcour({
-      name: "",
-      duration: "",
-      description: "",
-      price: "",
-      parcoursPicture: "",
-      difficulty: 0,
+    setNewStep({
+        stepName: "",
+        stepLatitude: "",
+        stepLongitude: "",
+        stepPicture: "",
+        stepDescription: "",
     });
   }
 
   const itemsArray = [
     {
-      name: "parcoursPicture",
+      name: "stepPicture",
       type: "file",
-      label: "Photo du parcours",
-      value: newParcour.parcoursPicture,
+      label: "Photo d'étape",
+      value: newStep.parcoursPicture,
       required: "{true}",
     },
     {
-      name: "name",
-      label: "Nom du parcours",
-      value: newParcour.name,
+      name: "stepName",
+      label: "Nom de l'étape",
+      value: newStep.stepName,
       required: "{true}",
     },
     {
-      name: "duration",
-      label: "Durée (en jours)",
-      value: newParcour.duration,
+      name: "stepLatitude",
+      label: "Lattitude",
+      value: newStep.stepLatitude,
       required: "{true}",
       type: "number",
       min: 0,
     },
     {
-      name: "price",
-      label: "Prix",
-      value: newParcour.price,
+      name: "stepLongitude",
+      label: "Longitude",
+      value: newStep.stepLongitude,
       required: "{true}",
       type: "number",
       min: 0,
@@ -91,14 +89,14 @@ function ParcoursRegister() {
     {
       name: "description",
       label: "Description",
-      value: newParcour.description,
+      value: newStep.stepDescription,
       required: "{true}",
     },
   ];
 
   return (
     <div>
-      <h3>Ajouter un nouveau parcours </h3>
+      <h3>Ajouter une étape </h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           {itemsArray.map((item) => (
@@ -113,18 +111,6 @@ function ParcoursRegister() {
               max={item.max}
             />
           ))}
-
-          <label>Difficulté</label>
-          <select
-            name="difficulty"
-            value={newParcour.difficulty}
-            required="{true}"
-            onChange={handleChange}
-          >
-            <option value="1"> 1 </option>
-            <option value="2"> 2 </option>
-            <option value="3"> 3 </option>
-          </select>
         </div>
 
         <Button> Enregistrer</Button>
@@ -135,4 +121,4 @@ function ParcoursRegister() {
   );
 }
 
-export default ParcoursRegister;
+export default StepsRegister;

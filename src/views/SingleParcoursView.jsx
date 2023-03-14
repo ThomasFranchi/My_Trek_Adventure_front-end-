@@ -5,6 +5,7 @@ import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 import emptyStar from "../pictures/ico_emptyStar.png";
 import fullStar from "../pictures/ico_fullStar.png";
+import StepsRegister from "../components/organisms/StepRegister";
 
 import Button from "../components/atoms/Button";
 import PopupAlert from "../components/organisms/PopupAlert";
@@ -127,8 +128,11 @@ function SingleParcoursView() {
             <div className="gameInfos">
               <p><span className="userInfo">Description :</span> {parcours.description}</p>
             </div>
-        </div>  
+        </div>
       </div>
+      mvp
+      <StepsRegister />
+      {/*to-do afficher liste d'étapes*/}
       {deleteAlert &&(
         <PopupAlert type = "ce parcours" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
       )}
