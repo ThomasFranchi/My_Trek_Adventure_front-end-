@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 
-import "../../styles/styleParcoursRegister.css";
+import "../../styles/styleForm.css";
 
 function StepsRegister({parcoursSlug}) {
   const [newStep, setNewStep] = useState({

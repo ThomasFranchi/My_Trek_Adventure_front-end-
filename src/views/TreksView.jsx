@@ -10,36 +10,33 @@ import Trek from "../components/Trek";
 
 export default function TreksView() {
   const [treksList, setTreksList] = useState([]);
-  const [errorMsg, setErrorMsg] = useState ("");
-  const {userLog} = useContext(UserConnect);
+  const [errorMsg, setErrorMsg] = useState("");
+  const { userLog } = useContext(UserConnect);
 
-  useEffect(() => {displayTreksList()}, [])
+  useEffect(() => { displayTreksList() }, [])
 
-  async function displayTreksList()
-  {
+  async function displayTreksList() {
     let token = localStorage.getItem("token");
 
-    const options = 
+    const options =
     {
-        method: 'GET',
-        headers: 
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: "Bearer " + token
-        }
+      method: 'GET',
+      headers:
+      {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
+      }
     };
     const response = await fetch('http://localhost:3001/treks', options);
     const data = await response.json();
     console.log(data);
-    if (!data) 
-    {
+    if (!data) {
       setTreksList([]);
       setErrorMsg("Aucun résultat trouvé");
     }
 
-    if (Array.isArray(data)) 
-    {
+    if (Array.isArray(data)) {
       setTreksList(data);
       setErrorMsg("");
     }
@@ -56,29 +53,29 @@ export default function TreksView() {
       )}
       {userLog && (
         <>
-        <Topbar />
-        {userLog.role !== "guide" && (<TreksRegister/>)}
-        <div id = "treksList">
-          <p>Liste des dates</p>
+          <Topbar />
+          {userLog.role !== "guide" && (<TreksRegister />)}
+          <div id="treksList">
+            <p>Liste des dates</p>
             {errorMsg}
             {treksList.map((trek) => (
-              <Trek 
-                key = {trek.slug}
-                trekName = {trek.trekName}
-                beginDate = {trek.beginDate} 
-                endDate = {trek.endDate} 
-                parcoursID = {trek.parcoursID} 
-                guideID = {trek.guideID}
-                minPlaces = {trek.minPlaces} 
-                maxPlaces = {trek.maxPlaces}
-                state = {trek.trekState}
-                slug = {trek.slug}
-                />        
+              <Trek
+                key={trek.slug}
+                trekName={trek.trekName}
+                beginDate={trek.beginDate}
+                endDate={trek.endDate}
+                parcoursID={trek.parcoursID}
+                guideID={trek.guideID}
+                minPlaces={trek.minPlaces}
+                maxPlaces={trek.maxPlaces}
+                state={trek.trekState}
+                slug={trek.slug}
+              />
             ))}
-        </div>
-        <div>
-      <Footer />
-      </div>
+          </div>
+          <div>
+            <Footer ClassName="footer" />
+          </div>
         </>
       )}
     </div>

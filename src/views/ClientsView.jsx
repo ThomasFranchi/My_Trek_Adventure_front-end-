@@ -8,37 +8,34 @@ import { UserConnect } from "../App";
 function ClientsView() {
   //const [isConnected, setIsConnected] = useState(false);
   const [clientsList, setClientsList] = useState([])
-  const [errorMsg, setErrorMsg] = useState ("");
-  const {userLog} = useContext(UserConnect);
+  const [errorMsg, setErrorMsg] = useState("");
+  const { userLog } = useContext(UserConnect);
 
-  useEffect(() => {displayClientsList()}, [])
+  useEffect(() => { displayClientsList() }, [])
 
-  async function displayClientsList()
-  {
+  async function displayClientsList() {
     let token = localStorage.getItem("token");
 
-    const options = 
+    const options =
     {
-      
-        method: 'GET',
-        headers: 
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: "Bearer " + token
-        }
+
+      method: 'GET',
+      headers:
+      {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
+      }
     };
-    const response = await fetch('http://localhost:3001/clients/',options);
+    const response = await fetch('http://localhost:3001/clients/', options);
     const data = await response.json()
     console.log(data);
-    if (!data) 
-    {
+    if (!data) {
       setClientsList([]);
       setErrorMsg("Aucun résultat trouvé");
     }
 
-    if (Array.isArray(data)) 
-    {
+    if (Array.isArray(data)) {
       setClientsList(data);
       setErrorMsg("");
     }
@@ -50,30 +47,30 @@ function ClientsView() {
         <>
           <p>Vous n'avez pas l'autorisation d'accéder à cette page</p>
           <p><Link to="/">Retour à l'accueil</Link></p>
-          
+
         </>
       )}
       {userLog && (
         <>
-        <Topbar />
-        <div id = "parcoursList">
-          <p>Liste des clients</p>
+          <Topbar />
+          <div id="parcoursList">
+            <p>Liste des clients</p>
             {errorMsg}
             {clientsList.map((client) => (
-              <Client 
-                key = {client.slug}
-                picture = {client.profilePicture} 
-                firstName = {client.firstName} 
-                lastName = {client.lastName} 
-                mail = {client.mail}
-                password = {client.password} 
-                slug = {client.slug}
-                />        
+              <Client
+                key={client.slug}
+                picture={client.profilePicture}
+                firstName={client.firstName}
+                lastName={client.lastName}
+                mail={client.mail}
+                password={client.password}
+                slug={client.slug}
+              />
             ))}
-        </div>
-        <div>
-      <Footer />
-      </div>
+          </div>
+          <div>
+            <Footer ClassName="footer" />
+          </div>
         </>
       )}
     </div>

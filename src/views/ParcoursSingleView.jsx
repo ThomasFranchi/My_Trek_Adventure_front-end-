@@ -12,7 +12,7 @@ import Button from "../components/atoms/Button";
 import Step from "../components/Step";
 import PopupAlert from "../components/organisms/PopupAlert";
 
-import "../styles/styleParcoursRegister.css";
+import "../styles/styleForm.css";
 
 function SingleParcoursView() {
   const [parcours, setParcours] = useState({})
@@ -175,37 +175,40 @@ function SingleParcoursView() {
       <div>
         {editMode && (
           <div className="parcoursregistercontainer">
-          <form onSubmit={updateParcours} encType="multipart/form-data">
-            {itemsArray.map((item) => (
-              <Input
-                name={item.name}
-                label={item.label}
-                value={item.value}
-                required={item.required}
-                type={item.type}
+            <form onSubmit={updateParcours} encType="multipart/form-data">
+              {itemsArray.map((item) => (
+                <Input
+                  name={item.name}
+                  label={item.label}
+                  value={item.value}
+                  required={item.required}
+                  type={item.type}
+                  onChange={handleChange}
+                />
+              ))}
+              <label>Difficulté</label>
+              <select
+                name="difficulty"
+                value={newParcours.difficulty}
                 onChange={handleChange}
-              />
-            ))}
-            <label>Difficulté</label>
-            <select
-              name="difficulty"
-              value={newParcours.difficulty}
-              onChange={handleChange}
-            >
-              <option value="0"> Sélectionner une difficulté </option>
-              <option value="1"> 1 </option>
-              <option value="2"> 2 </option>
-              <option value="3"> 3 </option>
-            </select>
-            <div className="buttonContainer">
-              <Button>VALIDER</Button>
-              <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
-            </div>
-          </form>
+              >
+                <option value="0"> Sélectionner une difficulté </option>
+                <option value="1"> 1 </option>
+                <option value="2"> 2 </option>
+                <option value="3"> 3 </option>
+              </select>
+              <div className="buttonContainer">
+                <Button>VALIDER</Button>
+                <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
+              </div>
+            </form>
           </div>
         )}
         {!editMode && (
           <div>
+            {deleteAlert && (
+              <PopupAlert type="ce parcours" cancel={() => cancelDelete()} confirm={() => confirmDelete()} />
+            )}
             <img style={{ width: 10 + '%' }} src={`http://localhost:3001${parcours.parcoursPicture}`} alt="Photo du parcours" />
             <div className="gameInfos">
               <p><span className="userInfo">Nom :</span> {parcours.name} </p>
@@ -241,15 +244,12 @@ function SingleParcoursView() {
                 description={step.stepDescription}
               />
             ))}
-            {deleteAlert && (
-              <PopupAlert type="ce parcours" cancel={() => cancelDelete()} confirm={() => confirmDelete()} />
-            )}
             <Button onClick={() => backToParcoursList()}>Retour aux parcours</Button>
           </div>
         )}
       </div>
       <div>
-        <Footer />
+        <Footer ClassName="footer" />
       </div>
     </div>
   );

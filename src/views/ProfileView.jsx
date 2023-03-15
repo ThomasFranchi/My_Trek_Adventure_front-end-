@@ -101,6 +101,9 @@ function ProfileView() {
   return (
     <div>
       <Topbar />
+      {deleteAlert &&(
+        <PopupAlert type = "votre profil" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
+      )}
       <h1>Page de {userProfile.firstName} {userProfile.lastName}</h1>
       <div id="postGuide">
         <div><p> ICI LA PHOTO </p></div>
@@ -127,11 +130,8 @@ function ProfileView() {
       state = {trek.trekState}
       />
       ))}
-      {deleteAlert &&(
-        <PopupAlert type = "votre profil" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
-      )}
       <div>
-      <Footer />
+      <Footer id="footer"/>
       </div>
     </div>
   );
