@@ -51,7 +51,7 @@ export default function Topbar()
             </div>
           )}
           <div>
-            <button onClick={logout}>Deconnexion</button>
+            <button onClick={logout} className="buttondeco">Deconnexion</button>
             {userLog.role === "guide" && ( <button onClick={goToProfile}>Mon profil</button> )}
             </div>
         </nav>

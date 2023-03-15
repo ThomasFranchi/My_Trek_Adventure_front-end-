@@ -1,11 +1,9 @@
 /* General */
 #topbar {
   display: flex;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #E5D9B6;
+  box-shadow: 0 3px 10px 0 #605b4b;
+  border: 1px solid #605b4b;
   flex-direction: row;
   width: 100vw;
 }
@@ -25,6 +23,17 @@
   max-width: 12%;
   height: auto;
   vertical-align: middle;
+}
+
+.buttondeco {
+border-radius: 30px;
+height: 20px;
+width: 110px;
+border-style: none;
+background: #E5D9B6;
+box-shadow:  5px 5px 10px #605e55,
+             -5px -5px 10px #fff8e4;
+             color: #095228; 
 }
 
 /* Partie Commune */
