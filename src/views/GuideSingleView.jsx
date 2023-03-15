@@ -6,19 +6,20 @@ import Footer from "../components/Footer";
 import Button from "../components/atoms/Button";
 import Input from "../components/atoms/Input";
 import PopupAlert from "../components/organisms/PopupAlert";
+import "../styles/styleForm.css";
 
 function SingleGuideView() {
   const [guide, setGuide] = useState({});
-  const [newGuide, setNewGuide] = useState({ 
-    firstName: "", lastName: "", mail: "", password: "", description: "", experienceYears: 0, 
-    guidePicture: "", state :""
+  const [newGuide, setNewGuide] = useState({
+    firstName: "", lastName: "", mail: "", password: "", description: "", experienceYears: 0,
+    guidePicture: "", state: ""
   });
 
   const [deleteAlert, setDeleteAlert] = useState(false);
-  const [editMode, setEditMode] = useState (false); // For the task to edit
+  const [editMode, setEditMode] = useState(false); // For the task to edit
 
   let params = useParams();
-  useEffect(() => {displayGuide()}, [])
+  useEffect(() => { displayGuide() }, [])
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -31,7 +32,7 @@ function SingleGuideView() {
       type: "file",
       label: "Photo de profil",
       value: newGuide.guidePicture,
-      accept:"image/jpeg,image/png, image/jpg",
+      accept: "image/jpeg,image/png, image/jpg",
     },
     {
       name: "firstName",
@@ -73,8 +74,7 @@ function SingleGuideView() {
     },
   ];
 
-  async function displayGuide()
-  {
+  async function displayGuide() {
     let token = localStorage.getItem("token");
     let options = {
       method: "GET",
@@ -87,79 +87,71 @@ function SingleGuideView() {
     const response = await fetch(`http://localhost:3001/guides/${params.slug}`, options);
     const data = await response.json();
     console.log(data);
-    if (!data) 
-    {
+    if (!data) {
       setGuide({});
     }
     setGuide(data);
     console.log(data.guidePicture);
   }
 
-  function backToGuidesList()
-  {
+  function backToGuidesList() {
     navigate("/guides");
   }
 
-  function setAlertState (state)
-  {
+  function setAlertState(state) {
     setDeleteAlert(state);
   }
 
   // Update a guide
-  async function updateGuide(e)
-  {
+  async function updateGuide(e) {
     e.preventDefault();
     const guideData = new FormData(e.target);
 
     guideData.append("slug", guide.slug);
 
     let token = localStorage.getItem("token");
-    const options = 
+    const options =
     {
       method: 'PUT',
-      headers: 
+      headers:
       {
-        Authorization : "Bearer " + token
+        Authorization: "Bearer " + token
       },
       body: guideData
     };
     const response = await fetch(`http://localhost:3001/guides/update/`, options);
     const data = await response.json();
     console.log(data.status);
-    if (data.status === 200) 
-    {
+    if (data.status === 200) {
       setEditMode(!editMode);
       navigate('/guides/' + guide.slug);
     }
   }
-  
+
   // Cancel a customer deletion
-  function cancelDelete()
-  {
+  function cancelDelete() {
     setAlertState(false);
   }
 
   // Confirm a customer deletion
-  async function confirmDelete()
-  {
+  async function confirmDelete() {
     let token = localStorage.getItem("token");
-    const options = 
+    const options =
     {
       method: 'DELETE',
-      headers: 
+      headers:
       {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          Authorization : "Bearer " + token
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify({
-          slug: params.slug
+        slug: params.slug
       })
     };
     const response = await fetch(`http://localhost:3001/guides/delete/`, options);
     const data = await response.json();
-    if (data.status === "200") 
-    {
+    if (data.status === "200") {
       setAlertState(false);
       backToGuidesList();
     }
@@ -168,56 +160,56 @@ function SingleGuideView() {
   return (
     <div>
       <Topbar />
-      <h1>Page de {guide.firstName} {guide.lastName}</h1>
-      <div id="postGuide">
-        {editMode && (
-          <form onSubmit={updateGuide} encType="multipart/form-data">
-          {itemsArray.map((item) => (
-            <Input
-            name={item.name}
-            label={item.label}
-            value={item.value}
-            required={item.required}
-            type={item.type}
-            onChange={handleChange}
-            />
-          ))}
-            <div className="clientInfos">
-              <Button>Valider</Button>
-              <Button onClick = {() => setEditMode(!editMode)}>Annuler les changements</Button>
-            </div>
-            </form>  
-        )}      
-      </div>
-      {!editMode && (
-        <div>
-          <img style = {{width: 10+'%'}} src= {`http://localhost:3001${guide.guidePicture}`} alt = "Photo de profil du guide"/>
-          <div className="content">
-            <div className="guideInfos">
-              <p><span className="guideInfo">Nom :</span> {guide.firstName} </p>
-              <p><span className="guideInfo">Prénom :</span> {guide.lastName} </p>
-              <p><span className="guideInfo">Mail :</span> {guide.mail} </p>
-              <p><span className="guideInfo">Années d'expériences :</span> {guide.experienceYears} </p>
-              <p><span className="guideInfo">Etat :</span> {guide.state} </p>  
-              <div className="guideInfos">
-                <p><span className="userInfo">Description :</span> {guide.description}</p>
-              </div>
-              <div className="clientInfos">
-                <Button onClick = {() => setEditMode(!editMode)}>Modifier le profil</Button>
-                <Button onClick = {() => setAlertState(true)}>Supprimer le profil</Button>
-              </div>
-            </div>
-         </div> 
-        {deleteAlert &&(
-          <PopupAlert type = "ce profil de guide" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
+      <div>
+        {deleteAlert && (
+          <PopupAlert type="ce profil d'utilisateur" cancel={() => cancelDelete()} confirm={() => confirmDelete()} />
         )}
-        <Button onClick = {() => backToGuidesList()}>Retour aux guides</Button>
+          {editMode && (
+            <div className="parcoursregistercontainer">
+              <form onSubmit={updateGuide} encType="multipart/form-data">
+                {itemsArray.map((item) => (
+                  <Input
+                    name={item.name}
+                    label={item.label}
+                    value={item.value}
+                    required={item.required}
+                    type={item.type}
+                    onChange={handleChange}
+                  />
+                ))}
+                <div className="buttonContainer">
+                  <Button>VALIDER</Button>
+                  <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
+                </div>
+              </form>
+            </div>
+          )}
+          {!editMode && (
+            <div>
+              <h1>Page de {guide.firstName} {guide.lastName}</h1>
+              <img style={{ width: 10 + '%' }} src={`http://localhost:3001${guide.guidePicture}`} alt="Photo de profil du guide" />
+              <div className="guideInfos">
+                <p><span className="guideInfo">Nom :</span> {guide.firstName} </p>
+                <p><span className="guideInfo">Prénom :</span> {guide.lastName} </p>
+                <p><span className="guideInfo">Mail :</span> {guide.mail} </p>
+                <p><span className="guideInfo">Années d'expériences :</span> {guide.experienceYears} </p>
+                <p><span className="guideInfo">Etat :</span> {guide.state} </p>
+                <div className="guideInfos">
+                  <p><span className="userInfo">Description :</span> {guide.description}</p>
+                </div>
+                <div className="clientInfos">
+                  <Button onClick={() => setEditMode(!editMode)}>Modifier le profil</Button>
+                  <Button onClick={() => setAlertState(true)}>Supprimer le profil</Button>
+                </div>
+              </div>
+              <Button onClick={() => backToGuidesList()}>Retour aux guides</Button>
+            </div>
+          )}
+        </div>
         <div>
-      <Footer />
+          <Footer ClassName="footer" />
+        </div>
       </div>
-      </div>
-    )}
-    </div>
   );
 }
 

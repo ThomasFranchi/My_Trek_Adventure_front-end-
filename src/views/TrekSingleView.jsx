@@ -7,7 +7,7 @@ import Booking from "../components/Booking";
 
 import Button from "../components/atoms/Button";
 import Input from "../components/atoms/Input";
-import "../styles/styleParcoursRegister.css";
+import "../styles/styleForm.css";
 
 function SingleTrekView() {
   const [trek, setTrek] = useState({})
@@ -250,10 +250,10 @@ function SingleTrekView() {
             <Button onClick={() => backToTreksList()}>Retour aux treks</Button>
           </div>
         )}
-        <div>
-          <Footer />
-        </div>
       </div>
+      <div>
+          <Footer ClassName="homeFooter" />
+        </div>
     </div>
   );
 }

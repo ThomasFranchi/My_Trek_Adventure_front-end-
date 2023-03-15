@@ -74,7 +74,7 @@ function ParcoursView() {
             ))}
         </div>
         <div>
-      <Footer />
+        <Footer ClassName= "footer"/>
       </div>
         </>
       )}

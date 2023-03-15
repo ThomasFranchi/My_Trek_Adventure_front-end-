@@ -34,7 +34,7 @@ function Home() {
         <>
         {!displayLoginForm && (
           <div className="loginFormButton">
-            <Button ClassName = "button" onClick={() => setDisplayLoginForm(true)}> Afficher le formulaire </Button>
+            <Button ClassName = "button" onClick={() => setDisplayLoginForm(true)}> CONNEXION </Button>
           </div>
         )}
         {displayLoginForm && (
@@ -56,7 +56,7 @@ function Home() {
       )}
     </div>
       <div>
-        <Footer />
+        <Footer ClassName= "homeFooter"/>
       </div>
   </div>
   );

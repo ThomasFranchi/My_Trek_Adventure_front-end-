@@ -1,9 +1,9 @@
 import '../styles/styleFooter.css';
 
-export default function Footer() 
+export default function Footer({ClassName}) 
 {
   return (
-    <footer id="footer">
+    <footer id={ClassName}>
       <div>
         <p>Copyright © 2023</p>
       </div>

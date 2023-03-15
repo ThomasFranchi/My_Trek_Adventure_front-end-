@@ -13,12 +13,16 @@
 }
 
 .button {
-    padding: 20px;
-    border-radius: 10%;
+    background-color: orange;
+    box-shadow: 2px 2px 8px rgb(129, 84, 0);
+    height: 80px;
+    width: 240px;
+    margin: 10px;
+    border-radius: 30px;
+    border-style: none;
+    text-align: center;
+    padding: 3px;
     font-size: 24px;
-    transition-duration: 0.5s;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    border: 0px solid;
 }
 
 .button:hover {
