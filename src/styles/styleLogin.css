@@ -1,0 +1,120 @@
+#page {
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+}
+
+.left {
+    background: #e5888894;
+    box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+    margin: 15px;
+    padding: 0px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+hr {
+    border: 1px dashed #000000;
+    width: 75%;
+}
+
+/* Buttons admin and guide */
+.roleButton {
+    padding: 10px 25px;
+    border-radius: 10%;
+    font-size: 24px;
+    transition-duration: 0.5s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border: 0px solid;
+}
+
+.roleButton:hover {
+    background-color: #af4c4c;
+    color: white;
+}
+
+.roleButton:target {
+    text-decoration: underline;
+}
+
+.right {
+    background: #e5888894;
+    box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+    margin: 15px;
+    padding: 0px 30px;
+}
+
+/* Login Form */
+
+.inputForm {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0px 15px 0px;
+    align-items: center;
+    align-content: center;
+}
+
+input 
+{
+    width: 100%;
+    margin: 10px 20px 5px 0px;
+    padding: 15px 0px;
+    outline: none;
+}
+
+label
+{
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+}
+
+/* Login button */
+.loginButton {
+    margin-top: 25px;
+    padding: 10px 50px;
+    border-radius: 10%;
+    font-size: 24px;
+    transition-duration: 0.5s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border: 0px solid;
+}
+
+.loginButton:hover {
+    background-color: #af4c4c;
+    color: white;
+}
+
+.loginButton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition-duration: 0.2s;
+  }
+
+.loginButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.0s;
+}
+
+.loginButton:hover span {
+    padding-right: 25px;
+}
+
+.loginButton:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+@media screen and (max-width: 600px) {
+    #page {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+}
