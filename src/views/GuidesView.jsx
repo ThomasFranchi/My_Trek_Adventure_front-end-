@@ -77,7 +77,9 @@ function GuidesView() {
                   />        
               ))}
           </div>
-          <Footer />
+          <div>
+      <Footer />
+      </div>
           </>
         )}
       </div>

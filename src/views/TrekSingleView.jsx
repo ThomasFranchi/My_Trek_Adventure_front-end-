@@ -106,7 +106,9 @@ function SingleTrekView() {
         </div> 
       </div>  
       <Button onClick = {() => backToTreksList()}>Retour aux treks</Button>
+      <div>
       <Footer />
+      </div>
     </div>
   );
 }

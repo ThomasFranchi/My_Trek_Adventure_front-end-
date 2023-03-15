@@ -71,7 +71,9 @@ function ClientsView() {
                 />        
             ))}
         </div>
-        <Footer />
+        <div>
+      <Footer />
+      </div>
         </>
       )}
     </div>

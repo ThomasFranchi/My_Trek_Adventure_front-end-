@@ -4,19 +4,26 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 
+import Input from "../components/atoms/Input";
 import Button from "../components/atoms/Button";
 import PopupAlert from "../components/organisms/PopupAlert";
 
 function SingleClientView() {
+
   const [client, setClient] = useState({})
+  const [newClient, setNewClient] = useState({firstName: "", lastName: "", mail: "", password: "", clientPicture: ""});
   const [deleteAlert, setDeleteAlert] = useState(false);
+  const [editMode, setEditMode] = useState (false); // For the task to edit
 
   let params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {displayClient()}, [])
   
-  let image;
+  function handleChange(e) {
+    setNewClient({ ...newClient, [e.target.name]: e.target.value });
+  }
+
   async function displayClient()
   {
     let token = localStorage.getItem("token");
@@ -33,8 +40,8 @@ function SingleClientView() {
     {
       setClient({});
     }
+    console.log(data);
     setClient(data);
-    console.log(data.clientPicture);
   }
 
   function backToClientsList()
@@ -42,16 +49,62 @@ function SingleClientView() {
     navigate("/clients");
   }
 
-  function setImageLink(profilePicture)
-  {
-    image = "http://localhost:3001"+ profilePicture;
-    console.log(image);
-    //return image;
-  }
+  const itemsArray = [
+    {
+      name: "client",
+      type: "file",
+      label: "Photo de profil",
+      value: newClient.parcoursPicture,
+      accept:"image/jpeg,image/png, image/jpg"
+    },
+    {
+      name: "firstName",
+      label: "Prénom",
+      value: newClient.firstName
+    },
+    {
+      name: "lastName",
+      label: "Nom",
+      value: newClient.lastName
+    },
+    {
+      name: "Mail",
+      label: "Mail",
+      value: newClient.mail,
+      type: "mail"
+    },
+    {
+      name: "password",
+      label: "Mot de passe",
+      value: newClient.password,
+      type: "password"
+    }
+  ];
 
-  function updateClient ()
+  async function updateClient (e)
   {
-    
+    e.preventDefault();
+    const clientData = new FormData(e.target);
+    clientData.append("slug", client.slug);
+
+    let token = localStorage.getItem("token");
+    const options = 
+    {
+      method: 'PUT',
+      headers: 
+      {
+        Authorization : "Bearer " + token
+      },
+      body: clientData
+    };
+    const response = await fetch(`http://localhost:3001/clients/update/`, options);
+    const data = await response.json();
+    console.log(data.status);
+    if (data.status === 200) 
+    {
+      setEditMode(!editMode);
+      navigate('/clients/' + client.slug);
+    }
   }
 
   function setAlertState (state)
@@ -91,31 +144,52 @@ function SingleClientView() {
     }
   }
 
-  setImageLink(client.clientPicture);
-
   return (
     <div>
       <Topbar />
       <h1>Page de {client.firstName} {client.lastName}</h1>
       <div id="postClient">
-        <img style = {{width: 10+'%'}} src={image} alt = "Photo de profil de l'utilisateur"/>
-        <div className="content">
+        {editMode && (
+          <form onSubmit={updateClient} encType="multipart/form-data">
+            {itemsArray.map((item) => (
+              <Input
+              name={item.name}
+              label={item.label}
+              value={item.value}
+              required={item.required}
+              type={item.type}
+              onChange={handleChange}
+              />
+            ))}
             <div className="clientInfos">
-              <p><span className="clientInfo">Nom Prénom :</span> {client.firstName} {client.lastName}</p>
-              <p><span className="clientInfo">Mail :</span> {client.mail} </p>
-              <p><span className="clientInfo">Mot de passe :</span> {client.password} </p>
+              <Button>Valider</Button>
+              <Button onClick = {() => setEditMode(!editMode)}>Annuler les changements</Button>
+            </div>
+          </form>  
+        )}   
+        {!editMode && (
+          <div>   
+            <img style = {{width: 10+'%'}} src={`http://localhost:3001${client.clientPicture}`} alt = "Photo de profil de l'utilisateur"/>
+            <div className="content">
               <div className="clientInfos">
-                <Button onClick = {null}>Modifier le profil</Button>
-                <Button onClick = {() => setAlertState(true)}>Supprimer le profil</Button>
+                <p><span className="clientInfo">Nom Prénom :</span> {client.firstName} {client.lastName}</p>
+                <p><span className="clientInfo">Mail :</span> {client.mail} </p>
+                <div className="clientInfos">
+                  <Button onClick = {() => setEditMode(!editMode)}>Modifier le profil</Button>
+                  <Button onClick = {() => setAlertState(true)}>Supprimer le profil</Button>
+                </div>
               </div>
             </div>
-        </div>  
+            {deleteAlert &&(
+              <PopupAlert type = "ce profil d'utilisateur" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
+            )}
+            <Button onClick = {() => backToClientsList()}>Retour aux clients</Button>
+          </div>
+        )}
+        <div>
+          <Footer />
+        </div>
       </div>
-      {deleteAlert &&(
-        <PopupAlert type = "ce profil d'utilisateur" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
-      )}
-      <Button onClick = {() => backToClientsList()}>Retour aux clients</Button>
-      <Footer />
     </div>
   );
 }

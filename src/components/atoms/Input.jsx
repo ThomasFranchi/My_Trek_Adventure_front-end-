@@ -1,4 +1,4 @@
-function Input({name, label, onChange, min, max, value, type = 'text', required = "{false}"}) {
+function Input({name, label, onChange, min, max, value, type = 'text', required = false}) {
 
     return (
         <div>

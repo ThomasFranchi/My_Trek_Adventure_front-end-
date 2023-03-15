@@ -130,7 +130,9 @@ function ProfileView() {
       {deleteAlert &&(
         <PopupAlert type = "votre profil" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
       )}
+      <div>
       <Footer />
+      </div>
     </div>
   );
 }

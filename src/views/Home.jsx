@@ -51,7 +51,9 @@ function Home() {
           </ul>
         </div>
       )}
+      <div>
       <Footer />
+      </div>
     </div>
   );
 }

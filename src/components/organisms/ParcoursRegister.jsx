@@ -56,7 +56,7 @@ function ParcoursRegister() {
       description: "",
       price: "",
       parcoursPicture: "",
-      difficulty: 0,
+      difficulty: 1,
     });
   }
 
@@ -66,36 +66,44 @@ function ParcoursRegister() {
       type: "file",
       label: "Photo du parcours",
       value: newParcour.parcoursPicture,
-      required: "{true}",
+      required: true
     },
     {
       name: "name",
       label: "Nom du parcours",
       value: newParcour.name,
-      required: "{true}",
+      required: true
     },
     {
       name: "duration",
       label: "Durée (en jours)",
       value: newParcour.duration,
-      required: "{true}",
+      required: true,
       type: "number",
-      min: 0,
+      min: 0
     },
     {
       name: "price",
       label: "Prix",
       value: newParcour.price,
-      required: "{true}",
+      required: true,
       type: "number",
-      min: 0,
+      min: 0
+    },
+    {
+      name: "difficulty",
+      label: "Difficulté",
+      value: newParcour.difficulty,
+      type: "number",
+      min: 1,
+      max: 3
     },
     {
       name: "description",
       label: "Description",
       value: newParcour.description,
-      required: "{true}",
-    },
+      required: true
+    }
   ];
 
   return (
