@@ -25,7 +25,7 @@ function GuideDate ({trekName, trekDate, trekBookings, state, parcoursID})
             Authorization: "Bearer " + token         
         }
     };
-    const parcoursResponse = await fetch("http://localhost:3001/parcours/get/:" + new URLSearchParams ({id: parcoursID}), options);
+    const parcoursResponse = await fetch(`http://localhost:3001/parcours/get/${parcoursID}`, options);
     const parcoursData = await parcoursResponse.json();
     if (!parcoursData) 
     {

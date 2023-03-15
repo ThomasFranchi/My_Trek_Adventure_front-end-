@@ -31,6 +31,7 @@ export default function TreksView() {
     };
     const response = await fetch('http://localhost:3001/treks', options);
     const data = await response.json();
+    console.log(data);
     if (!data) 
     {
       setTreksList([]);
@@ -74,7 +75,9 @@ export default function TreksView() {
                 />        
             ))}
         </div>
-        <Footer />
+        <div>
+      <Footer />
+      </div>
         </>
       )}
     </div>
