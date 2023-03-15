@@ -5,19 +5,19 @@ import Button from "../components/atoms/Button";
 import Login from "../components/organisms/Login";
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
-import '../styles/home.css';
-import { UserConnect } from "../App";
-
 import Logo_Google from "../pictures/logo_GooglePlay.png";
 import Logo_Apple from "../pictures/logo_AppleStore.png";
-import homebackg from "../pictures/homebackg.jpg"; 
+import { UserConnect } from "../App";
+
+import '../styles/styleHome.css';
 
 function Home() {
+  // useState variables
   const [displayLoginForm, setDisplayLoginForm] = useState(false);
   const {userLog} = useContext(UserConnect);
-  console.log({userLog});
+
   return (
-    <div className="homecontainer" style={{ backgroundImage:`url(${homebackg})` }}>
+    <div id="homecontainer">
       {userLog && (
         <>
           <Topbar />
@@ -32,10 +32,12 @@ function Home() {
       {!userLog && (
         <>
         {!displayLoginForm && (
-          <Button onClick={() => setDisplayLoginForm(true)}> Afficher le formulaire </Button>
+          <div className="loginFormButton">
+            <Button ClassName = "button" onClick={() => setDisplayLoginForm(true)}> Afficher le formulaire </Button>
+          </div>
         )}
         {displayLoginForm && (
-          <Login />
+            <Login />
         )}
         </>
       )}
@@ -52,7 +54,7 @@ function Home() {
         </div>
       )}
       <div>
-      <Footer />
+        <Footer />
       </div>
     </div>
   );

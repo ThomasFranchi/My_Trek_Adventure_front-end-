@@ -74,13 +74,6 @@ function SingleParcoursView() {
       type: "number",
     },
     {
-      name: "difficulty",
-      label: "Difficulté",
-      value: newParcours.difficulty,
-      type: "number",
-      max: 3
-    },
-    {
       name: "price",
       label: "Prix du parcours",
       value: newParcours.price,
@@ -121,7 +114,7 @@ function SingleParcoursView() {
     setDeleteAlert(state);
   }
 
-  // Update a guide
+  // Update a parcours
   async function updateParcours(e)
   {
     e.preventDefault();
@@ -200,6 +193,17 @@ function SingleParcoursView() {
                 onChange={handleChange}
                 />
               ))}
+              <label>Difficulté</label>
+            <select
+              name="difficulty"
+              value={newParcours.difficulty}
+              onChange={handleChange}
+            >
+            <option value="0"> Sélectionner une difficulté </option>
+            <option value="1"> 1 </option>
+            <option value="2"> 2 </option>
+            <option value="3"> 3 </option>
+          </select>
               <div className="clientInfos">
                 <Button>Valider</Button>
                 <Button onClick = {() => setEditMode(!editMode)}>Annuler les changements</Button>

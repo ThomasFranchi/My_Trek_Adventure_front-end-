@@ -6,6 +6,7 @@ function Booking ({userID, date, status})
   const [user, setUser] = useState ([]);
 
   useEffect(() => {getUserFromId()}, [])
+  
 
   async function getUserFromId()
   {
@@ -21,7 +22,7 @@ function Booking ({userID, date, status})
             Authorization: "Bearer " + token         
         }
     };
-    const response = await fetch("http://localhost:3001/clients/get/:" + new URLSearchParams ({id: userID}), options);
+    const response = await fetch(`http://localhost:3001/clients/get/${userID}`, options);
     const data = await response.json();
     if (!data) 
     {
