@@ -4,8 +4,7 @@ import { UserConnect } from "../App";
 import AdminRegister from "../components/organisms/AdminRegister";
 
 function AdminsView() {
-  const [isConnected, setIsConnected] = useState(false);
-  const {userLog} = useContext(UserConnect);
+  const {userLog} = useContext(UserConnect); // Context to check if the user is connected
   return (
     <div>
       {!userLog && (

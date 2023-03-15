@@ -73,7 +73,9 @@ function ParcoursView() {
                 />        
             ))}
         </div>
-        <Footer />
+        <div>
+      <Footer />
+      </div>
         </>
       )}
     </div>

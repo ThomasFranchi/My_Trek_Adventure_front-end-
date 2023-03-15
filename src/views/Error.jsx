@@ -19,7 +19,9 @@ function Error()
                     </div>
                 </div>
             </div>
-            <Footer />
+            <div>
+      <Footer />
+      </div>
         </div>  
     );
 }

@@ -29,7 +29,7 @@ function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, min
             Authorization: "Bearer " + token         
         }
     };
-    const parcoursResponse = await fetch("http://localhost:3001/parcours/get/:" + new URLSearchParams ({id: parcoursID}), options);
+    const parcoursResponse = await fetch(`http://localhost:3001/parcours/get/${parcoursID}`, options);
     const parcoursData = await parcoursResponse.json();
     if (!parcoursData) 
     {
@@ -37,7 +37,7 @@ function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, min
     }
     setParcours(parcoursData);
 
-    const guideResponse = await fetch(`http://localhost:3001/guides/get/:` + new URLSearchParams ({id: guideID}), options);
+    const guideResponse = await fetch(`http://localhost:3001/guides/get/${guideID}`, options);
     const guideData = await guideResponse.json();
     console.log(guideData);
     if (!guideData) 
