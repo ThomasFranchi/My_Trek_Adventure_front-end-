@@ -1,3 +1,9 @@
 .parcoursViewContainer {
     background-color: white;
 }
+
+.h3parcours {
+    font-size: 25px;
+    font-weight: 800;
+    color: #582900;
+}
