@@ -1,5 +1,6 @@
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
+import "../../styles/styleParcoursRegister.css";
 const { useState } = require("react");
 
 function ParcoursRegister() {
@@ -106,7 +107,7 @@ function ParcoursRegister() {
   ];
 
   return (
-    <div>
+    <div className="parcoursregistercontainer">
       <h3>Ajouter un nouveau parcours </h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>

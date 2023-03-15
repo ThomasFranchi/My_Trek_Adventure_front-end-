@@ -43,7 +43,7 @@ function Home() {
         <div>
           <p>Bienvenue !</p> 
           <p>A partir d'ici, ou dans la barre de navigation, vous pouvez accéder à différentes fonctions.</p> 
-          <ul>
+          <ul className="liform">
             <li>Vous pouvez accéder <Link to="/parcours/">aux différents parcours</Link> pour en créer de nouveaux, les modifier pour rajouter des étapes ou changer des infomrations ,et égalmeent les modifier.</li>
             <li>Vous pouvez accéder <Link to="/treks/">aux différentes dates disponibles</Link> pour les parcours, en créer de nouvelles, les modifier ou les supprimer.</li>
             <li>Vous pouvez accéder à la <Link to="/guides/">liste des guides</Link> inscrits, où vous pourrez ajouter un nouveau guide, modifier des profils, ou supprimer des guides.</li>

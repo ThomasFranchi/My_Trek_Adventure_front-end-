@@ -250,8 +250,9 @@ function SingleParcoursView() {
             </div>
           )}
         </div>
+      </div>
       <div>
-      <Footer />
+      	<Footer />
       </div>
     </div>
   );

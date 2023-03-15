@@ -24,8 +24,7 @@ function StepsRegister({parcoursSlug}) {
     console.log(newStep);
 
     const formData = new FormData(e.target);
-    formData.append ("slug", parcoursSlug)
-
+    formData.append("slug", parcoursSlug);
     const token = localStorage.getItem("token");
 
     let options = {
@@ -78,7 +77,7 @@ function StepsRegister({parcoursSlug}) {
       value: newStep.stepLatitude,
       required: "{true}",
       type: "number",
-      min: 0,
+      step: "any",
     },
     {
       name: "stepLongitude",
@@ -86,7 +85,7 @@ function StepsRegister({parcoursSlug}) {
       value: newStep.stepLongitude,
       required: "{true}",
       type: "number",
-      min: 0,
+      step: "any",
     },
     {
       name: "stepDescription",

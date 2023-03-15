@@ -1,11 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import emptyStar from "../pictures/ico_emptyStar.png";
 import fullStar from "../pictures/ico_fullStar.png";
-
+import "../styles/styleParcours.css";
 import Button from "./atoms/Button";
 
-function Parcours ({picture, name, duration, description, price, difficulty, slug}) 
-{
+function Parcours ({
+  parcoursPicture, 
+  name, 
+  duration, 
+  description, 
+  price, 
+  difficulty, 
+  slug,
+}) {
   let difficultyLevel;
   const navigate = useNavigate();
 
@@ -38,7 +45,7 @@ function Parcours ({picture, name, duration, description, price, difficulty, slu
 
   return (
     <div id="post">
-      <div><img className = "parcoursImage" src = {picture} alt = "Photos du parcours"></img></div>
+      <div><img className = "parcoursImage" src = {`http://localhost:3001${parcoursPicture}`} alt = "Photos du parcours"></img></div>
       <div className="content">
           <div className="gameInfos">
             <p><span className="userInfo">Nom :</span> {name} </p>
