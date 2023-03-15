@@ -4,7 +4,10 @@ import Input from "../atoms/Input";
 import Button from "../atoms/Button";
 import { UserConnect } from "../../App";
 
+import '../../styles/styleLogin.css';
+
 function Login() {
+  // useState variables
   const { setUserLog } = useContext(UserConnect);
   const navigate = useNavigate();
 
@@ -15,15 +18,16 @@ function Login() {
     mail: "",
     password: "",
   });
-
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setsuccessMessage] = useState(null);
 
+  // Update inputfields accroding to the value inside
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
     console.log(e.target.value);
   }
 
+  // Method to login
   async function handleSubmit(e) {
     e.preventDefault();
     const { email, password } = user;
@@ -58,39 +62,24 @@ function Login() {
   }
 
   return (
-    <div>
-      <h3>Se connecter en tant que {loginRole} </h3>
-      <form onSubmit={handleSubmit}>
-        <Input
-          name="mail"
-          label="Mail"
-          onChange={handleChange}
-          value={user.mail}
-          required={true}
-          type= "email"
-        />
-        <Input
-          name="password"
-          label="Mot de passe"
-          onChange={handleChange}
-          value={user.password}
-          type="password"
-          required={true}
-        />
-        <div>
-            Changer vers : 
-          {loginRole === "guide" ? <Button onClick={ () => setLoginRole("admin")}>Administrateur</Button>
-          : 
-          <Button onClick={() => setLoginRole("guide")}>Guide</Button> }
-          
-        </div>
-        <Button>Me connecter</Button>
-
-        {/* <button></button> */}
-      </form>
-      <p>{errorMessage}</p>
-      <p>{successMessage}</p>
-    </div>
+    <div id="page">
+      <div class="left">
+        <h3>Se connecter en tant que rôle : <br/>{loginRole} </h3>
+        <hr />
+        <Button ClassName = "roleButton" onClick={ () => setLoginRole("admin")}>Admin</Button>
+        <Button ClassName = "roleButton" onClick={() => setLoginRole("guide")}>Guide</Button>
+      </div>
+      
+      <div class="right">
+        <form onSubmit={handleSubmit}>
+          <Input name="mail" label="Mail" onChange={handleChange} value={user.mail} required={true} type= "email" />
+          <Input name="password" label="Mot de passe" onChange={handleChange} value={user.password} type="password" required={true} />
+          <Button ClassName = "loginButton" ><span>Me connecter</span></Button>
+        </form>
+        <p>{errorMessage}</p>
+        <p>{successMessage}</p>  
+      </div> 
+    </div> 
   );
 }
 export default Login;

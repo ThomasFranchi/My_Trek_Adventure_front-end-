@@ -1,0 +1,42 @@
+#homecontainer {
+    background-image: url("../pictures/background.jpg");
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.loginFormButton {
+    padding: 50px 25px;
+}
+
+.button {
+    padding: 20px;
+    border-radius: 10%;
+    font-size: 24px;
+    transition-duration: 0.5s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border: 0px solid;
+}
+
+.button:hover {
+    background-color: #af4c4c;
+    border: 2px solid #af4c4c;
+    color: white;
+}
+
+
+/* When connected */
+.liform {
+    list-style-type: none;
+}
+
+li {
+    padding-bottom: 3px;
+}
+
+.logohp {
+    height: 60px;
+}
