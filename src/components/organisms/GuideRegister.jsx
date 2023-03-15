@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
-const { useState } = require("react");
+import "../../styles/styleParcoursRegister.css";
 
 function GuideRegister() {
   const [newGuide, setNewGuide] = useState({
@@ -13,6 +14,7 @@ function GuideRegister() {
     guidePicture: "",
   });
 
+  const [displayform, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -23,25 +25,11 @@ function GuideRegister() {
   // Submit input to DB to create a new Game
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(newGuide);
 
     const formData = new FormData(e.target);
 
-    // const {
-    //   firstName,
-    //   lastName,
-    //   mail,
-    //   password,
-    //   description,
-    //   experienceYears,
-    //   profilePicture,
-
-    // } = newGuide;
-
     // Fetch options
-
     const token = localStorage.getItem("token");
-
 
     let options = {
       method: "POST",
@@ -98,7 +86,7 @@ function GuideRegister() {
     },
     {
       name: "mail",
-      label: "Email",
+      label: "Mail",
       value: newGuide.mail,
       required: "{true}",
       type: "email",
@@ -126,24 +114,37 @@ function GuideRegister() {
   ];
 
   return (
-    <div>
-      <h3>Ajouter un nouveau guide </h3>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        {itemsArray.map((item) => (
-          <Input
-            name={item.name}
-            label={item.label}
-            value={item.value}
-            required={item.required}
-            type={item.type}
-            onChange={handleChange}
-          />
-        ))}
-
-        <Button> Enregistrer</Button>
-        {errorMessage !== null && <p>Erreur: {errorMessage}</p>}
-        {successMessage !== null && <p>{successMessage}</p>}
-      </form>
+    <div className="parcoursregistercontainer">
+      {!displayform && (
+        <div id = "buttonForm">
+          <Button onClick={()=>setDisplayForm(!displayform)}>AJOUTER</Button>
+        </div>
+      )}
+      {displayform && (
+      <>
+        <h3>Ajouter un nouveau guide </h3>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div>
+            {itemsArray.map((item) => (
+              <Input
+                name={item.name}
+                label={item.label}
+                value={item.value}
+                required={item.required}
+                type={item.type}
+                onChange={handleChange}
+              />
+            ))}
+          </div>
+          <div className="buttonContainer">
+            <Button onClick={()=>setDisplayForm(!displayform)}>ANNULER</Button>
+            <Button> ENREGISTRER</Button>
+          </div>
+          {errorMessage !== null && <p>Erreur: {errorMessage}</p>}
+          {successMessage !== null && <p>{successMessage}</p>}
+        </form>
+      </>
+      )}
     </div>
   );
 }

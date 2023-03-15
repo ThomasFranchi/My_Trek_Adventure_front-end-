@@ -1,12 +1,13 @@
 .parcoursregistercontainer {
-    height:min-content;
+    transition-duration: 300ms;
+    height: min-content;
     width: fit-content;
     text-align: left;
     border-radius: 5px;
     box-shadow: 1px 1px 5px black;
     background-color: #fbf3db;
     color:#582900;
-    display:flex; 
+    display:inline-flex; 
     flex-direction: column;
     margin-top:30px;
     padding:15px; 
@@ -14,6 +15,10 @@
 
 h3 {
     text-align: center;
+}
+#buttonForm
+{
+    align-items: center;
 }
 
 input {
@@ -41,7 +46,7 @@ input {
 button {
     background-color: orange;
     box-shadow: 2px 2px 8px rgb(129, 84, 0);
-    height: 20px;
+    height: 40px;
     width: 120px;
     margin: 10px;
     border-radius: 30px;
@@ -56,12 +61,12 @@ button:hover {
 }
 
 .buttonContainer {
-    margin: 10px;
+    margin: 0px 0px 0px 0px;
     text-align: center;
 }
 
 select {
-    width: 20%;
+    width: 100%;
     border: 2px solid #582900;
     border-radius: 0.25em;
     padding: 0.25em 0.5em;

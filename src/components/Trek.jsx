@@ -5,7 +5,7 @@ import fullStar from "../pictures/ico_fullStar.png";
 
 import Button from "./atoms/Button";
 
-function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, minPlaces, maxPlaces, slug}) 
+function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, minPlaces, maxPlaces, state, slug}) 
 {
   const [errorMsg, setErrorMsg] = useState ("");
   const [guide, setGuide] = useState ([]);
@@ -59,6 +59,7 @@ function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, min
         <p>{trekName}</p>
           <p><span className="userInfo">Sur le parcours </span> {parcours.name}</p>
           <p><span className="userInfo">Animé par </span> {guide.firstName} {guide.lastName}</p>
+          <p><span className="userInfo">Etat : </span> {state}</p>
         </div>
         <div className="gameInfos">
           <Button onClick = {goToTrekPage}>Voir le trek</Button>

@@ -9,31 +9,33 @@ import StepsRegister from "../components/organisms/StepRegister";
 
 import Input from "../components/atoms/Input";
 import Button from "../components/atoms/Button";
-import Step from  "../components/Step";
+import Step from "../components/Step";
 import PopupAlert from "../components/organisms/PopupAlert";
+
+import "../styles/styleParcoursRegister.css";
 
 function SingleParcoursView() {
   const [parcours, setParcours] = useState({})
   const [parcoursSteps, setParcoursSteps] = useState([])
-  const [newParcours, setNewParcours] = useState({ 
-  name: "", duration: "", description: "", price: "", parcoursPicture: "", difficulty: 0});
+  const [newParcours, setNewParcours] = useState({
+    name: "", duration: "", description: "", price: "", parcoursPicture: "", difficulty: 0
+  });
 
   const [deleteAlert, setDeleteAlert] = useState(false);
-  const [editMode, setEditMode] = useState (false); // For the task to edit
+  const [editMode, setEditMode] = useState(false); // For the task to edit
 
   let params = useParams();
   const navigate = useNavigate();
-  useEffect(() => {displayParcours()}, [])
-  
-  let image; 
+  useEffect(() => { displayParcours() }, [])
+
+  let image;
   let difficultyLevel;
 
   function handleChange(e) {
     setNewParcours({ ...newParcours, [e.target.name]: e.target.value });
   }
 
-  async function displayParcours()
-  {
+  async function displayParcours() {
     let token = localStorage.getItem("token");
     let options = {
       method: "GET",
@@ -46,8 +48,7 @@ function SingleParcoursView() {
     const response = await fetch(`http://localhost:3001/parcours/${params.slug}`, options);
     const data = await response.json();
     console.log(data.steps);
-    if (!data) 
-    {
+    if (!data) {
       setParcours({});
     }
     setParcours(data);
@@ -60,7 +61,7 @@ function SingleParcoursView() {
       type: "file",
       label: "Photo de parcours",
       value: newParcours.parcoursPicture,
-      accept:"image/jpeg,image/png, image/jpg",
+      accept: "image/jpeg,image/png, image/jpg",
     },
     {
       name: "name",
@@ -83,19 +84,16 @@ function SingleParcoursView() {
     {
       name: "description",
       label: "Description du parcours",
-      value: newParcours.description,     
+      value: newParcours.description,
     }
   ];
 
-  function backToParcoursList()
-  {
+  function backToParcoursList() {
     navigate("/parcours");
   }
 
-  async function setDifficulty (difficulty)
-  {
-    switch (difficulty)
-    {
+  async function setDifficulty(difficulty) {
+    switch (difficulty) {
       case 1:
         difficultyLevel = "Facile";
         break;
@@ -109,153 +107,149 @@ function SingleParcoursView() {
     return difficultyLevel;
   }
 
-  function setAlertState (state)
-  {
+  function setAlertState(state) {
     setDeleteAlert(state);
   }
 
   // Update a parcours
-  async function updateParcours(e)
-  {
+  async function updateParcours(e) {
     e.preventDefault();
     const parcoursData = new FormData(e.target);
     parcoursData.append("slug", parcours.slug);
     console.log(parcoursData);
 
     let token = localStorage.getItem("token");
-    const options = 
+    const options =
     {
       method: 'PUT',
-      headers: 
+      headers:
       {
-        Authorization : "Bearer " + token
+        Authorization: "Bearer " + token
       },
       body: parcoursData
     };
     const response = await fetch(`http://localhost:3001/parcours/update/`, options);
     const data = await response.json();
     console.log(data.status);
-    if (data.status === 200) 
-    {
+    if (data.status === 200) {
       setEditMode(!editMode)
       navigate('/parcours/' + parcours.slug);
     }
   }
-  
+
   // Cancel a customer deletion
-  function cancelDelete()
-  {
+  function cancelDelete() {
     setAlertState(false);
   }
 
   // Confirm a customer deletion
-  async function confirmDelete()
-  {
+  async function confirmDelete() {
     let token = localStorage.getItem("token");
-    const options = 
+    const options =
     {
       method: 'DELETE',
-      headers: 
+      headers:
       {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          Authorization : "Bearer " + token
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify({
-          slug: params.slug
+        slug: params.slug
       })
     };
     const response = await fetch(`http://localhost:3001/parcours/delete/`, options);
     const data = await response.json();
-    if (data.status === "200") 
-    {
+    if (data.status === "200") {
       setAlertState(false);
       backToParcoursList();
     }
   }
-  
+
   setDifficulty(parcours.difficulty);
 
   return (
     <div>
       <Topbar />
       <h1>Page du parcours {parcours.name}</h1>
-        <div className="content">
-          {editMode && (
-            <form onSubmit={updateParcours} encType="multipart/form-data">
-              {itemsArray.map((item) => (
-                <Input
+      <div>
+        {editMode && (
+          <div className="parcoursregistercontainer">
+          <form onSubmit={updateParcours} encType="multipart/form-data">
+            {itemsArray.map((item) => (
+              <Input
                 name={item.name}
                 label={item.label}
                 value={item.value}
                 required={item.required}
                 type={item.type}
                 onChange={handleChange}
-                />
-              ))}
-              <label>Difficulté</label>
+              />
+            ))}
+            <label>Difficulté</label>
             <select
               name="difficulty"
               value={newParcours.difficulty}
               onChange={handleChange}
             >
-            <option value="0"> Sélectionner une difficulté </option>
-            <option value="1"> 1 </option>
-            <option value="2"> 2 </option>
-            <option value="3"> 3 </option>
-          </select>
-              <div className="clientInfos">
-                <Button>Valider</Button>
-                <Button onClick = {() => setEditMode(!editMode)}>Annuler les changements</Button>
-              </div>
-            </form>  
-          )}      
-          {!editMode && (
-            <div>
-              <img style = {{width: 10+'%'}} src= {`http://localhost:3001${parcours.parcoursPicture}`} alt = "Photo du parcours"/>
-              <div className="gameInfos">
-                <p><span className="userInfo">Nom :</span> {parcours.name} </p>
-                <p><span className="userInfo">Durée :</span> {parcours.duration} jours</p>
-                <p><span className="userInfo">Prix :</span> {parcours.price} €</p>
-                {parcours.difficulty === 1 && (
-                  <p><span className="userInfo">Difficulté :</span> <img src = {fullStar} alt = "Etoile Pleine" /><img src = {emptyStar} alt = "Etoile Vide"/> <img src = {emptyStar} alt = "Etoile Vide"/> ({difficultyLevel})</p>
-                )}
-                {parcours.difficulty === 2 && (
-                  <p><span className="userInfo">Difficulté :</span> <img src = {fullStar} alt = "Etoile Pleine" /><img src = {fullStar} alt = "Etoile Pleine"/> <img src = {emptyStar} alt = "Etoile Vide"/> ({difficultyLevel})</p>
-                )}
-                {parcours.difficulty === 3 && (
-                  <p><span className="userInfo">Difficulté :</span> <img src = {fullStar} alt = "Etoile Pleine" /><img src = {fullStar} alt = "Etoile Pleine"/> <img src = {fullStar} alt = "Etoile Pleine"/> ({difficultyLevel})</p>
-                )}
-              </div>
-              <div className="gameInfos">
-                <p><span className="userInfo">Description :</span> {parcours.description}</p>
-              </div>
-              <div className="clientInfos">
-              <Button onClick = {() => setEditMode(!editMode)}>Modifier le parcours</Button>
-              <Button onClick = {() => setAlertState(true)}>Supprimer le parcours</Button>
+              <option value="0"> Sélectionner une difficulté </option>
+              <option value="1"> 1 </option>
+              <option value="2"> 2 </option>
+              <option value="3"> 3 </option>
+            </select>
+            <div className="buttonContainer">
+              <Button>VALIDER</Button>
+              <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
             </div>
-            <StepsRegister parcoursSlug = {parcours.slug}/>
+          </form>
+          </div>
+        )}
+        {!editMode && (
+          <div>
+            <img style={{ width: 10 + '%' }} src={`http://localhost:3001${parcours.parcoursPicture}`} alt="Photo du parcours" />
+            <div className="gameInfos">
+              <p><span className="userInfo">Nom :</span> {parcours.name} </p>
+              <p><span className="userInfo">Durée :</span> {parcours.duration} jours</p>
+              <p><span className="userInfo">Prix :</span> {parcours.price} €</p>
+              {parcours.difficulty === 1 && (
+                <p><span className="userInfo">Difficulté :</span> <img src={fullStar} alt="Etoile Pleine" /><img src={emptyStar} alt="Etoile Vide" /> <img src={emptyStar} alt="Etoile Vide" /> ({difficultyLevel})</p>
+              )}
+              {parcours.difficulty === 2 && (
+                <p><span className="userInfo">Difficulté :</span> <img src={fullStar} alt="Etoile Pleine" /><img src={fullStar} alt="Etoile Pleine" /> <img src={emptyStar} alt="Etoile Vide" /> ({difficultyLevel})</p>
+              )}
+              {parcours.difficulty === 3 && (
+                <p><span className="userInfo">Difficulté :</span> <img src={fullStar} alt="Etoile Pleine" /><img src={fullStar} alt="Etoile Pleine" /> <img src={fullStar} alt="Etoile Pleine" /> ({difficultyLevel})</p>
+              )}
+            </div>
+            <div className="gameInfos">
+              <p><span className="userInfo">Description :</span> {parcours.description}</p>
+            </div>
+            <div className="clientInfos">
+              <Button onClick={() => setEditMode(!editMode)}>MODIFIER</Button>
+              <Button onClick={() => setAlertState(true)}>SUPPRIMER</Button>
+            </div>
+            <StepsRegister parcoursSlug={parcours.slug} />
             <p>Etapes</p>
             {parcoursSteps.map((step) => (
-              <Step 
-              parcoursSlug = {parcours.slug}
-              stepSlug = {step.stepSlug}
-              name = {step.stepName}
-              picture = {step.stepPicture}
-              latitude = {step.stepLatitude}
-              longitude = {step.stepLongitude}
-              description = {step.stepDescription}
+              <Step
+                parcoursSlug={parcours.slug}
+                stepSlug={step.stepSlug}
+                name={step.stepName}
+                picture={step.stepPicture}
+                latitude={step.stepLatitude}
+                longitude={step.stepLongitude}
+                description={step.stepDescription}
               />
             ))}
-            {deleteAlert &&(
-              <PopupAlert type = "ce parcours" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
+            {deleteAlert && (
+              <PopupAlert type="ce parcours" cancel={() => cancelDelete()} confirm={() => confirmDelete()} />
             )}
-            <Button onClick = {() => backToParcoursList()}>Retour aux parcours</Button>
-            </div>
-          )}
-        </div>
+            <Button onClick={() => backToParcoursList()}>Retour aux parcours</Button>
+          </div>
+        )}
+      </div>
       <div>
-      	<Footer />
+        <Footer />
       </div>
     </div>
   );
