@@ -58,7 +58,7 @@ function ParcoursView() {
         <Topbar />
         {userLog.role !== "guide" && (<ParcoursRegister/>)}
         <div id = "parcoursList">
-          <p>Liste des parcours</p>
+          <p className="h3parcours">Liste des parcours</p>
             {errorMsg}
             {parcoursList.map((parcours) => (
               <Parcours 

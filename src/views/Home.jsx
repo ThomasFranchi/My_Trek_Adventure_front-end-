@@ -17,12 +17,13 @@ function Home() {
   const {userLog} = useContext(UserConnect);
 
   return (
-    <div id="homecontainer">
+  <div id="homecontainer">
       {userLog && (
         <>
           <Topbar />
         </>
       )}
+      <div className="textContainer">
       <p>Vous êtes client ? </p>
       <p>Une application est disponible pour vous sur le Google Play Store pour Android et sur l'Apple Store pour IOS.</p>
       <div>
@@ -53,10 +54,11 @@ function Home() {
           </ul>
         </div>
       )}
+    </div>
       <div>
         <Footer />
       </div>
-    </div>
+  </div>
   );
 }
 
