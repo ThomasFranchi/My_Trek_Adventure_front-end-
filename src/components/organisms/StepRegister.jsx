@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
-const { useState } = require("react");
+
+import "../../styles/styleParcoursRegister.css";
 
 function StepsRegister({parcoursSlug}) {
   const [newStep, setNewStep] = useState({
@@ -10,7 +12,7 @@ function StepsRegister({parcoursSlug}) {
     stepPicture: "",
     stepDescription: "",
   });
-
+  const [displayform, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -96,7 +98,14 @@ function StepsRegister({parcoursSlug}) {
   ];
 
   return (
-    <div>
+    <div className="parcoursregistercontainer">
+      {!displayform && (
+      <div id = "buttonForm">
+        <Button onClick={()=>setDisplayForm(!displayform)}>NOUVELLE ÉTAPE</Button>
+      </div>
+    )}
+    {displayform && (
+      <>
       <h3>Ajouter une étape </h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
@@ -113,12 +122,16 @@ function StepsRegister({parcoursSlug}) {
             />
           ))}
         </div>
-
-        <Button> Enregistrer</Button>
+        <div className="buttonContainer">
+          <Button onClick={()=>setDisplayForm(!displayform)}>ANNULER</Button>
+          <Button> ENREGISTRER</Button> 
+        </div>
         {errorMessage !== null && <p>{errorMessage}</p>}
         {successMessage !== null && <p>{successMessage}</p>}
       </form>
-    </div>
+      </>
+    )}
+     </div>
   );
 }
 

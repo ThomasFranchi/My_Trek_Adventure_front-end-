@@ -7,11 +7,11 @@ import Booking from "../components/Booking";
 
 import Button from "../components/atoms/Button";
 import Input from "../components/atoms/Input";
+import "../styles/styleParcoursRegister.css";
 
 function SingleTrekView() {
   const [trek, setTrek] = useState({})
-  const [newTrek, setNewTrek] = useState({ 
-    parcours: "", guide: "", beginDate: "", endDate: "", minPlaces: "", maxPlaces: "", trekState: ""});
+  const [newTrek, setNewTrek] = useState({ parcours: "", guide: "", beginDate: "", endDate: "", minPlaces: "", maxPlaces: "", trekState: "" });
   const [trekBookings, setTrekBookings] = useState([]);
 
   // Guides and parcours iy user wants to change trek
@@ -19,8 +19,8 @@ function SingleTrekView() {
   const [guidesList, setGuidesList] = useState([]);
 
   // Guide and parcours for trek
-  const [guide, setGuide] = useState ([]);
-  const [parcours, setParcours] = useState ([]);
+  const [guide, setGuide] = useState([]);
+  const [parcours, setParcours] = useState([]);
 
 
   function handleChange(e) {
@@ -28,14 +28,13 @@ function SingleTrekView() {
     setNewTrek({ ...newTrek, [e.target.name]: e.target.value });
   }
 
-  const [editMode, setEditMode] = useState (false); // For the task to edit
+  const [editMode, setEditMode] = useState(false); // For the task to edit
   let params = useParams();
   const navigate = useNavigate();
-  useEffect(() => {displayTrek()}, []);
-  useEffect(() => {getParcoursAndGuides()}, []);
+  useEffect(() => { displayTrek() }, []);
+  useEffect(() => { getParcoursAndGuides() }, []);
 
-  async function displayTrek()
-  {
+  async function displayTrek() {
     let token = localStorage.getItem("token");
     let options = {
       method: "GET",
@@ -48,12 +47,10 @@ function SingleTrekView() {
     const response = await fetch(`http://localhost:3001/treks/${params.slug}`, options);
     const data = await response.json();
     console.log(data);
-    if (!data) 
-    {
+    if (!data) {
       setTrek({});
     }
-    else 
-    {
+    else {
       setTrek(data);
       getParcoursAndGuideFromIds(data.parcoursID, data.guideID);
       setTrekBookings(data.bookings);
@@ -61,7 +58,7 @@ function SingleTrekView() {
   }
 
   // Get parcours and guides
-  async function getParcoursAndGuides () {
+  async function getParcoursAndGuides() {
     const token = localStorage.getItem("token");
 
     let options = {
@@ -93,24 +90,22 @@ function SingleTrekView() {
     }
   }
 
-  async function getParcoursAndGuideFromIds(trekID, guideID)
-  {
+  async function getParcoursAndGuideFromIds(trekID, guideID) {
     let token = localStorage.getItem("token");
 
-    const options = 
+    const options =
     {
-        method: 'GET',
-        headers: 
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: "Bearer " + token         
-        }
+      method: 'GET',
+      headers:
+      {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
+      }
     };
     const parcoursResponse = await fetch(`http://localhost:3001/parcours/get/${trekID}`, options);
     const parcoursData = await parcoursResponse.json();
-    if (!parcoursData) 
-    {
+    if (!parcoursData) {
       setParcours("");
     }
     setParcours(parcoursData);
@@ -118,8 +113,7 @@ function SingleTrekView() {
     const guideResponse = await fetch(`http://localhost:3001/guides/get/${guideID}`, options);
     const guideData = await guideResponse.json();
     console.log(guideData);
-    if (!guideData) 
-    {
+    if (!guideData) {
       setGuide("");
     }
     setGuide(guideData);
@@ -143,23 +137,21 @@ function SingleTrekView() {
       label: "Places minimum",
       value: newTrek.minPlaces,
       type: "number",
-  },
-  {
+    },
+    {
       name: "maxPlaces",
       label: "Places maximum",
       value: newTrek.maxPlaces,
       type: "number",
-  },
+    },
   ];
 
-  function backToTreksList()
-  {
+  function backToTreksList() {
     navigate("/treks");
   }
 
   // Update a parcours
-  async function updateTrek(e)
-  {
+  async function updateTrek(e) {
     e.preventDefault();
 
     var obj = {};
@@ -167,21 +159,20 @@ function SingleTrekView() {
     obj.slug = trek.slug;
 
     let token = localStorage.getItem("token");
-    const options = 
+    const options =
     {
       method: 'PUT',
-      headers: 
+      headers:
       {
         "Content-Type": "application/json",
-        Authorization : "Bearer " + token
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify(obj)
     };
     const response = await fetch(`http://localhost:3001/treks/update/`, options);
     const data = await response.json();
     console.log(data.status);
-    if (data.status === 200) 
-    {
+    if (data.status === 200) {
       setEditMode(!editMode)
       navigate('/treks/');
     }
@@ -191,77 +182,77 @@ function SingleTrekView() {
     <div>
       <Topbar />
       <h1>Page du trek</h1>
-      <div id="post">
-        <div className="content">
-          {editMode && (
+      <div>
+        {editMode && (
+          <div className="parcoursregistercontainer">
             <form onSubmit={updateTrek}>
               <div>
                 <label>Parcours</label>
                 <select name="parcours" value={newTrek.parcours} onChange={handleChange} >
                   <option value="" selected disabled hidden>Choisissez un parcours</option>
-                  {parcoursList.map((parcours) => ( <option value={parcours.slug}> {parcours.name} </option> ))}
+                  {parcoursList.map((parcours) => (<option value={parcours.slug}> {parcours.name} </option>))}
                 </select>
               </div>
               <div>
                 <label>Guide</label>
                 <select name="guide" value={newTrek.guide} onChange={handleChange}>
                   <option value="" selected disabled hidden>Choisissez un guide</ option>
-                  {guidesList.map((guide) => ( <option value={guide.slug}> {`${guide.firstName} ${guide.lastName}`}</option>))}
+                  {guidesList.map((guide) => (<option value={guide.slug}> {`${guide.firstName} ${guide.lastName}`}</option>))}
                 </select>
               </div>
               <div>
                 {itemsArray.map((item) => (
                   <Input
-                  name={item.name}
-                  label={item.label}
-                  value={item.value}
-                  required={item.required}
-                  type={item.type}
-                  onChange={handleChange}
+                    name={item.name}
+                    label={item.label}
+                    value={item.value}
+                    required={item.required}
+                    type={item.type}
+                    onChange={handleChange}
                   />
                 ))}
                 <label>Etat du trek</label>
-                  <select name="trekState" value={newTrek.trekState} onChange={handleChange} >
-                    <option value=""> Sélectionner un état </option>
-                    <option value="A venir"> A venir </option>
-                    <option value="En cours"> En cours </option>
-                    <option value="Terminé"> Terminé </option>
-                    <option value="Annulé"> Annulé </option>
-                  </select>
-                <div className="clientInfos">
-                  <Button>Valider</Button>
-                  <Button onClick = {() => setEditMode(!editMode)}>Annuler les changements</Button>
+                <select name="trekState" value={newTrek.trekState} onChange={handleChange} >
+                  <option value=""> Sélectionner un état </option>
+                  <option value="A venir"> A venir </option>
+                  <option value="En cours"> En cours </option>
+                  <option value="Terminé"> Terminé </option>
+                  <option value="Annulé"> Annulé </option>
+                </select>
+                <div className="buttonContainer">
+                  <Button>VALIDER</Button>
+                  <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
                 </div>
               </div>
-            </form>  
-          )}      
-          {!editMode && (
-            <div>
-              <div className="gameInfos">
-                <p><span className="userInfo">Animé par </span> {guide.firstName} {guide.lastName}</p>
-                <p><span className="userInfo">Date de début :</span> {trek.beginDate} </p>
-                <p><span className="userInfo">Date de fin :</span> {trek.endDate}</p>
-                <p><span className="userInfo">Places minimum :</span> {trek.minPlaces} places</p>
-                <p><span className="userInfo">Places maximium :</span> {trek.maxPlaces} places</p>
-              </div>
-              <Button onClick = {() => setEditMode(!editMode)}>Editer le trek</Button>
-              <div className="gameInfos">
-                <p>Réservations</p>
-                {trekBookings.map((booking) => (
-                  <Booking 
-                    userID = {booking.userID} 
-                    date = {booking.bookingDate} 
-                    status = {booking.state}
-                    />        
-                ))}
-              </div>
-              <Button onClick = {() => backToTreksList()}>Retour aux treks</Button>
-            </div> 
-          )}
-      </div>
-      </div>
-      <div>
-        <Footer />
+            </form>
+          </div>
+        )}
+        {!editMode && (
+          <div>
+            <div className="gameInfos">
+              <p><span className="userInfo">Animé par </span> {guide.firstName} {guide.lastName}</p>
+              <p><span className="userInfo">Date de début :</span> {trek.beginDate} </p>
+              <p><span className="userInfo">Date de fin :</span> {trek.endDate}</p>
+              <p><span className="userInfo">Places minimum :</span> {trek.minPlaces} places</p>
+              <p><span className="userInfo">Places maximium :</span> {trek.maxPlaces} places</p>
+            </div>
+            <Button onClick={() => setEditMode(!editMode)}>Editer le trek</Button>
+            <div className="gameInfos">
+              <p>Réservations</p>
+              {trekBookings.map((booking) => (
+                <Booking
+                  userID={booking.userID}
+                  date={booking.bookingDate}
+                  status={booking.state}
+                />
+              ))}
+            </div>
+            <Button onClick={() => backToTreksList()}>Retour aux treks</Button>
+          </div>
+        )}
+        <div>
+          <Footer />
+        </div>
       </div>
     </div>
   );

@@ -71,6 +71,7 @@ export default function TreksView() {
                 guideID = {trek.guideID}
                 minPlaces = {trek.minPlaces} 
                 maxPlaces = {trek.maxPlaces}
+                state = {trek.trekState}
                 slug = {trek.slug}
                 />        
             ))}

@@ -7,25 +7,25 @@ import Footer from "../components/Footer";
 import Input from "../components/atoms/Input";
 import Button from "../components/atoms/Button";
 import PopupAlert from "../components/organisms/PopupAlert";
+import "../styles/styleParcoursRegister.css";
 
 function SingleClientView() {
 
   const [client, setClient] = useState({})
-  const [newClient, setNewClient] = useState({firstName: "", lastName: "", mail: "", password: "", clientPicture: ""});
+  const [newClient, setNewClient] = useState({ firstName: "", lastName: "", mail: "", password: "", clientPicture: "" });
   const [deleteAlert, setDeleteAlert] = useState(false);
-  const [editMode, setEditMode] = useState (false); // For the task to edit
+  const [editMode, setEditMode] = useState(false); // For the task to edit
 
   let params = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {displayClient()}, [])
-  
+  useEffect(() => { displayClient() }, [])
+
   function handleChange(e) {
     setNewClient({ ...newClient, [e.target.name]: e.target.value });
   }
 
-  async function displayClient()
-  {
+  async function displayClient() {
     let token = localStorage.getItem("token");
     let options = {
       method: "GET",
@@ -36,26 +36,24 @@ function SingleClientView() {
     };
     const response = await fetch(`http://localhost:3001/clients/${params.slug}`, options);
     const data = await response.json();
-    if (!data) 
-    {
+    if (!data) {
       setClient({});
     }
     console.log(data);
     setClient(data);
   }
 
-  function backToClientsList()
-  {
+  function backToClientsList() {
     navigate("/clients");
   }
 
   const itemsArray = [
     {
-      name: "client",
+      name: "clientPicture",
       type: "file",
       label: "Photo de profil",
-      value: newClient.parcoursPicture,
-      accept:"image/jpeg,image/png, image/jpg"
+      value: newClient.clientPicture,
+      accept: "image/jpeg,image/png, image/jpg"
     },
     {
       name: "firstName",
@@ -81,64 +79,58 @@ function SingleClientView() {
     }
   ];
 
-  async function updateClient (e)
-  {
+  async function updateClient(e) {
     e.preventDefault();
     const clientData = new FormData(e.target);
     clientData.append("slug", client.slug);
 
     let token = localStorage.getItem("token");
-    const options = 
+    const options =
     {
       method: 'PUT',
-      headers: 
+      headers:
       {
-        Authorization : "Bearer " + token
+        Authorization: "Bearer " + token
       },
       body: clientData
     };
-    const response = await fetch(`http://localhost:3001/clients/update/`, options);
+    const response = await fetch(`http://localhost:3001/clients/updateadmin/`, options);
     const data = await response.json();
     console.log(data.status);
-    if (data.status === 200) 
-    {
+    if (data.status === 200) {
       setEditMode(!editMode);
       navigate('/clients/' + client.slug);
     }
   }
 
-  function setAlertState (state)
-  {
+  function setAlertState(state) {
     setDeleteAlert(state);
   }
-  
+
   // Cancel a customer deletion
-  function cancelDelete()
-  {
+  function cancelDelete() {
     setAlertState(false);
   }
 
   // Confirm a customer deletion
-  async function confirmDelete()
-  {
+  async function confirmDelete() {
     let token = localStorage.getItem("token");
-    const options = 
+    const options =
     {
       method: 'DELETE',
-      headers: 
+      headers:
       {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          Authorization : "Bearer " + token
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify({
-          slug: params.slug
+        slug: params.slug
       })
     };
     const response = await fetch(`http://localhost:3001/clients/delete/`, options);
     const data = await response.json();
-    if (data.status === "200") 
-    {
+    if (data.status === "200") {
       setAlertState(false);
       backToClientsList();
     }
@@ -147,50 +139,56 @@ function SingleClientView() {
   return (
     <div>
       <Topbar />
-      <h1>Page de {client.firstName} {client.lastName}</h1>
-      <div id="postClient">
-        {editMode && (
-          <form onSubmit={updateClient} encType="multipart/form-data">
-            {itemsArray.map((item) => (
-              <Input
-              name={item.name}
-              label={item.label}
-              value={item.value}
-              required={item.required}
-              type={item.type}
-              onChange={handleChange}
-              />
-            ))}
-            <div className="clientInfos">
-              <Button>Valider</Button>
-              <Button onClick = {() => setEditMode(!editMode)}>Annuler les changements</Button>
-            </div>
-          </form>  
-        )}   
-        {!editMode && (
-          <div>   
-            <img style = {{width: 10+'%'}} src={`http://localhost:3001${client.clientPicture}`} alt = "Photo de profil de l'utilisateur"/>
-            <div className="content">
-              <div className="clientInfos">
-                <p><span className="clientInfo">Nom Prénom :</span> {client.firstName} {client.lastName}</p>
-                <p><span className="clientInfo">Mail :</span> {client.mail} </p>
-                <div className="clientInfos">
-                  <Button onClick = {() => setEditMode(!editMode)}>Modifier le profil</Button>
-                  <Button onClick = {() => setAlertState(true)}>Supprimer le profil</Button>
-                </div>
-              </div>
-            </div>
-            {deleteAlert &&(
-              <PopupAlert type = "ce profil d'utilisateur" cancel = {() => cancelDelete()} confirm = {() => confirmDelete()} /> 
-            )}
-            <Button onClick = {() => backToClientsList()}>Retour aux clients</Button>
-          </div>
+      <div>
+        {deleteAlert && (
+          <PopupAlert type="ce profil d'utilisateur" cancel={() => cancelDelete()} confirm={() => confirmDelete()} />
         )}
+        <h1>Page de {client.firstName} {client.lastName}</h1>
+            <div>
+              {editMode && (
+                <div className="parcoursregistercontainer">
+                  <form onSubmit={updateClient} encType="multipart/form-data">
+                    {itemsArray.map((item) => (
+                      <Input
+                        name={item.name}
+                        label={item.label}
+                        value={item.value}
+                        required={item.required}
+                        type={item.type}
+                        onChange={handleChange}
+                      />
+                    ))}
+                    <div className="buttonContainer">
+                      <Button>VALIDER</Button>
+                      <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
+                    </div>
+                  </form>
+                </div>
+              )}
+              {!editMode && (
+                <div>
+                  <img style={{ width: 10 + '%' }} src={`http://localhost:3001${client.clientPicture}`} alt="Photo de profil de l'utilisateur" />
+                  <div className="content">
+                    <div className="clientInfos">
+                      <p><span className="clientInfo">Nom Prénom :</span> {client.firstName} {client.lastName}</p>
+                      <p><span className="clientInfo">Mail :</span> {client.mail} </p>
+                      <div className="clientInfos">
+                        <Button onClick={() => setEditMode(!editMode)}>Modifier le profil</Button>
+                        <Button onClick={() => setAlertState(true)}>Supprimer le profil</Button>
+                      </div>
+                    </div>
+                  </div>
+                  <Button onClick={() => backToClientsList()}>Retour aux clients</Button>
+                </div>
+
+              )}
+            </div>
         <div>
           <Footer />
         </div>
       </div>
     </div>
+
   );
 }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
+import "../../styles/styleParcoursRegister.css";
 
 function TreksRegister() {
   const [newTrek, setNewTrek] = useState({
@@ -12,6 +13,7 @@ function TreksRegister() {
     maxPlaces: "",
   });
 
+  const [displayform, setDisplayForm] = useState(false);
   const [parcoursList, setParcoursList] = useState([]);
   const [guidesList, setGuidesList] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -94,28 +96,28 @@ function TreksRegister() {
   const itemsArray = [
     {
       name: "beginDate",
-      label: "date de départ",
+      label: "Date de début",
       value: newTrek.beginDate,
       required: true,
       type: "date",
     },
     {
         name: "endDate",
-        label: "date d'arrivée",
+        label: "Date de fin",
         value: newTrek.endDate,
         required: true,
         type: "date",
     },
     {
         name: "minPlaces",
-        label: "min (place)",
+        label: "Places minimum",
         value: newTrek.minPlaces,
         required: true,
         type: "number",
     },
     {
         name: "maxPlaces",
-        label: "max (place)",
+        label: "Places maximum",
         value: newTrek.maxPlaces,
         required: true,
         type: "number",
@@ -123,12 +125,19 @@ function TreksRegister() {
 ];
 
 return (
-    <div>
-      <h3>Ajouter un nouveau Trek </h3>
-      <form onSubmit={handleSubmit}>
-      <div>
-        <label>Parcours</label>
-        <select
+  <div className="parcoursregistercontainer">
+    {!displayform && (
+      <div id = "buttonForm">
+        <Button onClick={()=>setDisplayForm(!displayform)}>AJOUTER</Button>
+      </div>
+    )}
+    {displayform && (
+      <>
+        <h3>Ajouter un nouveau Trek </h3>
+        <form onSubmit={handleSubmit}>
+        <div>
+          <label>Parcours</label>
+          <select
           name="parcours"
           value={newTrek.parcours}
           required="{true}"
@@ -168,11 +177,15 @@ return (
           />
         ))}
       </div>
-
-        <Button> Enregistrer</Button>
+      <div className="buttonContainer">
+        <Button onClick={()=>setDisplayForm(!displayform)}>ANNULER</Button>
+        <Button>ENREGISTER</Button>
+      </div>
         {errorMessage !== null && <p>{errorMessage}</p>}
         {successMessage !== null && <p>{successMessage}</p>}
       </form>
+      </>
+      )}
     </div>
   );
 }

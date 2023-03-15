@@ -7,12 +7,22 @@
 .left {
     background: #e5888894;
     box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
-    margin: 15px;
+    margin: 0px 15px;
     padding: 0px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    width: fit-content;
+    text-align: left;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px black;
+    background-color: #fbf3db;
+    color:#582900;
+    display:flex; 
+    flex-direction: column;
+    margin-top:30px;
+    padding:15px; 
 }
 
 hr {
@@ -22,17 +32,20 @@ hr {
 
 /* Buttons admin and guide */
 .roleButton {
-    padding: 10px 25px;
-    border-radius: 10%;
-    font-size: 24px;
-    transition-duration: 0.5s;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    border: 0px solid;
+    background-color: orange;
+    box-shadow: 2px 2px 8px rgb(129, 84, 0);
+    height: 40px;
+    width: 120px;
+    margin: 10px;
+    border-radius: 30px;
+    border-style: none;
+    text-align: center;
+    padding: 3px;
 }
 
 .roleButton:hover {
-    background-color: #af4c4c;
-    color: white;
+    background-color: rgb(203, 245, 139);
+    box-shadow: 2px 2px 12px rgb(133, 160, 92);
 }
 
 .roleButton:target {
@@ -40,10 +53,17 @@ hr {
 }
 
 .right {
-    background: #e5888894;
-    box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
-    margin: 15px;
-    padding: 0px 30px;
+    width: fit-content;
+    text-align: left;
+    border-radius: 5px;
+    margin: 0px 15px;
+    box-shadow: 1px 1px 5px black;
+    background-color: #fbf3db;
+    color:#582900;
+    display:flex; 
+    flex-direction: column;
+    margin-top:30px;
+    padding:15px; 
 }
 
 /* Login Form */
@@ -56,13 +76,19 @@ hr {
     align-content: center;
 }
 
-input 
-{
-    width: 100%;
-    margin: 10px 20px 5px 0px;
-    padding: 15px 0px;
+input {
+    width: 90%;
+    border: 2px solid transparent;
     outline: none;
-}
+    border-bottom: 2px solid #582900;
+    caret-color: #582900;
+    background-color: #fbf3db;
+    padding: 5px;
+    margin: 10px;
+    transition: .3s linear;
+    font-family: monospace;
+    letter-spacing: 1px;
+  }
 
 label
 {
@@ -72,18 +98,20 @@ label
 
 /* Login button */
 .loginButton {
-    margin-top: 25px;
-    padding: 10px 50px;
-    border-radius: 10%;
-    font-size: 24px;
-    transition-duration: 0.5s;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    border: 0px solid;
+    background-color: orange;
+    box-shadow: 2px 2px 8px rgb(129, 84, 0);
+    height: 40px;
+    width: 120px;
+    margin: 10px;
+    border-radius: 30px;
+    border-style: none;
+    text-align: center;
+    padding: 3px;
 }
 
 .loginButton:hover {
-    background-color: #af4c4c;
-    color: white;
+    background-color: rgb(203, 245, 139);
+    box-shadow: 2px 2px 12px rgb(133, 160, 92);
 }
 
 .loginButton span {
