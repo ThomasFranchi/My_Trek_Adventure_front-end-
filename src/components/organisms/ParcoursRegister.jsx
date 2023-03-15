@@ -13,6 +13,7 @@ function ParcoursRegister() {
     difficulty: 0,
   });
 
+  const [displayform, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -64,52 +65,46 @@ function ParcoursRegister() {
     {
       name: "parcoursPicture",
       type: "file",
-      label: "Photo du parcours",
+      label: "Photo : ",
       value: newParcour.parcoursPicture,
-      required: true
+      required: true,
     },
     {
       name: "name",
-      label: "Nom du parcours",
+      label: "Nom : ",
       value: newParcour.name,
-      required: true
+      required: true,
     },
     {
       name: "duration",
-      label: "Durée (en jours)",
+      label: "Durée (en jours) : ",
       value: newParcour.duration,
       required: true,
       type: "number",
-      min: 0
+      min: 0,
     },
     {
       name: "price",
-      label: "Prix",
+      label: "Prix : ",
       value: newParcour.price,
       required: true,
       type: "number",
-      min: 0
-    },
-    {
-      name: "difficulty",
-      label: "Difficulté",
-      value: newParcour.difficulty,
-      type: "number",
-      min: 1,
-      max: 3
+      min: 0,
     },
     {
       name: "description",
-      label: "Description",
+      label: "Description : ",
       value: newParcour.description,
-      required: true
-    }
+      required: true,
+    },
   ];
 
   return (
     <div className="parcoursregistercontainer">
-      <h3>Ajouter un nouveau parcours </h3>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <h3>Ajouter un Parcours </h3>
+      <Button onClick={()=>setDisplayForm(!displayform
+        )}>AJOUTER</Button>
+        {displayform && (<form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           {itemsArray.map((item) => (
             <Input
@@ -123,24 +118,27 @@ function ParcoursRegister() {
               max={item.max}
             />
           ))}
-
-          <label>Difficulté</label>
-          <select
-            name="difficulty"
-            value={newParcour.difficulty}
-            required="{true}"
-            onChange={handleChange}
-          >
-            <option value="1"> 1 </option>
-            <option value="2"> 2 </option>
-            <option value="3"> 3 </option>
-          </select>
+          <div className="selectContainer">
+            <label>Difficulté : </label>
+            <select
+              name="difficulty"
+              value={newParcour.difficulty}
+              required="{true}"
+              onChange={handleChange}
+            >
+              <option value="0"> Sélectionner une Difficulté </option>
+              <option value="1"> 1 </option>
+              <option value="2"> 2 </option>
+              <option value="3"> 3 </option>
+            </select>
+          </div>
         </div>
-
-        <Button> Enregistrer</Button>
+        <div className="buttonContainer">
+          <Button>ENREGISTER</Button>
+        </div>
         {errorMessage !== null && <p>{errorMessage}</p>}
         {successMessage !== null && <p>{successMessage}</p>}
-      </form>
+      </form>)}
     </div>
   );
 }

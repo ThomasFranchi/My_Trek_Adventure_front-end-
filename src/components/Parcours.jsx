@@ -45,7 +45,7 @@ function Parcours ({
 
   return (
     <div id="post">
-      <div><img className = "parcoursImage" src = {`http://localhost:3001${parcoursPicture}`} alt = "Photos du parcours"></img></div>
+      <div><img className = "parcoursImage" src = {`http://localhost:3001${parcoursPicture}`} alt = "Photo du parcours"></img></div>
       <div className="content">
           <div className="gameInfos">
             <p><span className="userInfo">Nom :</span> {name} </p>
