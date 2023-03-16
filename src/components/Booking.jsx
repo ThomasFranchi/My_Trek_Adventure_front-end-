@@ -34,12 +34,16 @@ function Booking ({userID, date, status})
   }
 
   return (
-    <div id="post">
-      <div className="gameInfos">
+    <div className="bookingContainer">
+      <div className="userInfoContainer">
         <p><span className="userInfo">Client </span> {user.firstName} {user.lastName}</p>
+        </div>
+        <div className="userInfoContainer">
         <p><span className="userInfo">Date de la réservation </span> {date}</p>
+        </div>
+        <div className="userInfoContainer">
         <p><span className="userInfo">Statut :</span> {status} </p>
-      </div>
+        </div>
     </div> 
   );
 }

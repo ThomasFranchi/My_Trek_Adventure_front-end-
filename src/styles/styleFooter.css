@@ -6,8 +6,8 @@
   position: absolute;
   background: #E5D9B6;
   box-shadow: 0 3px 10px 0 #605b4b;
-  border: 1px solid #605b4b;
-  width: 100vw;
+  
+  width: 100%;
   color: #095228;
   align-items: center;
 }
@@ -22,7 +22,7 @@
   background: #E5D9B6;
   box-shadow: 0 3px 10px 0 #605b4b;
   border: 1px solid #605b4b;
-  width: 100vw;
+  width: 100%;
   color: #095228;
   align-items: center;
 }
