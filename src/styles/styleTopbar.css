@@ -3,9 +3,8 @@
   display: flex;
   background: #E5D9B6;
   box-shadow: 0 3px 10px 0 #605b4b;
-  border: 1px solid #605b4b;
   flex-direction: row;
-  width: 100vw;
+  width: 100%;
 }
 
 .topbar-line {
@@ -35,6 +34,17 @@ box-shadow:  5px 5px 10px #605e55,
              -5px -5px 10px #fff8e4;
              color: #095228; 
 }
+
+.buttondeco:hover {
+  border-radius: 30px;
+  height: 20px;
+  width: 110px;
+  border-style: none;
+  background: #E5D9B6;
+  box-shadow:  -5px -5px 10px #605e55,
+               5px 5px 10px #fff8e4;
+               color: #095228; 
+  }
 
 /* Partie Commune */
 .linkDiv {

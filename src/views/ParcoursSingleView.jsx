@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
@@ -13,12 +13,18 @@ import Step from "../components/Step";
 import PopupAlert from "../components/organisms/PopupAlert";
 
 import "../styles/styleForm.css";
+import "../styles/styleSingleParcoursView.css";
 
 function SingleParcoursView() {
-  const [parcours, setParcours] = useState({})
-  const [parcoursSteps, setParcoursSteps] = useState([])
+  const [parcours, setParcours] = useState({});
+  const [parcoursSteps, setParcoursSteps] = useState([]);
   const [newParcours, setNewParcours] = useState({
-    name: "", duration: "", description: "", price: "", parcoursPicture: "", difficulty: 0
+    name: "",
+    duration: "",
+    description: "",
+    price: "",
+    parcoursPicture: "",
+    difficulty: 0,
   });
 
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -26,7 +32,9 @@ function SingleParcoursView() {
 
   let params = useParams();
   const navigate = useNavigate();
-  useEffect(() => { displayParcours() }, [])
+  useEffect(() => {
+    displayParcours();
+  }, []);
 
   let image;
   let difficultyLevel;
@@ -42,10 +50,13 @@ function SingleParcoursView() {
       headers: {
         "Content-Type": "application/json",
         Authorization: "bearer " + token,
-      }
+      },
     };
 
-    const response = await fetch(`http://localhost:3001/parcours/${params.slug}`, options);
+    const response = await fetch(
+      `http://localhost:3001/parcours/${params.slug}`,
+      options
+    );
     const data = await response.json();
     console.log(data.steps);
     if (!data) {
@@ -79,13 +90,13 @@ function SingleParcoursView() {
       label: "Prix du parcours",
       value: newParcours.price,
       type: "number",
-      min: 0
+      min: 0,
     },
     {
       name: "description",
       label: "Description du parcours",
       value: newParcours.description,
-    }
+    },
   ];
 
   function backToParcoursList() {
@@ -119,21 +130,22 @@ function SingleParcoursView() {
     console.log(parcoursData);
 
     let token = localStorage.getItem("token");
-    const options =
-    {
-      method: 'PUT',
-      headers:
-      {
-        Authorization: "Bearer " + token
+    const options = {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
       },
-      body: parcoursData
+      body: parcoursData,
     };
-    const response = await fetch(`http://localhost:3001/parcours/update/`, options);
+    const response = await fetch(
+      `http://localhost:3001/parcours/update/`,
+      options
+    );
     const data = await response.json();
     console.log(data.status);
     if (data.status === 200) {
-      setEditMode(!editMode)
-      navigate('/parcours/' + parcours.slug);
+      setEditMode(!editMode);
+      navigate("/parcours/" + parcours.slug);
     }
   }
 
@@ -145,20 +157,21 @@ function SingleParcoursView() {
   // Confirm a customer deletion
   async function confirmDelete() {
     let token = localStorage.getItem("token");
-    const options =
-    {
-      method: 'DELETE',
-      headers:
-      {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: "Bearer " + token
+    const options = {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
-        slug: params.slug
-      })
+        slug: params.slug,
+      }),
     };
-    const response = await fetch(`http://localhost:3001/parcours/delete/`, options);
+    const response = await fetch(
+      `http://localhost:3001/parcours/delete/`,
+      options
+    );
     const data = await response.json();
     if (data.status === "200") {
       setAlertState(false);
@@ -171,7 +184,7 @@ function SingleParcoursView() {
   return (
     <div>
       <Topbar />
-      <h1>Page du parcours {parcours.name}</h1>
+      <h1 className="parcoursName"> {parcours.name} </h1>
       <div>
         {editMode && (
           <div className="parcoursregistercontainer">
@@ -207,32 +220,110 @@ function SingleParcoursView() {
         {!editMode && (
           <div>
             {deleteAlert && (
-              <PopupAlert type="ce parcours" cancel={() => cancelDelete()} confirm={() => confirmDelete()} />
+              <PopupAlert
+                type="ce parcours"
+                cancel={() => cancelDelete()}
+                confirm={() => confirmDelete()}
+              />
             )}
-            <img style={{ width: 10 + '%' }} src={`http://localhost:3001${parcours.parcoursPicture}`} alt="Photo du parcours" />
-            <div className="gameInfos">
-              <p><span className="userInfo">Nom :</span> {parcours.name} </p>
-              <p><span className="userInfo">Durée :</span> {parcours.duration} jours</p>
-              <p><span className="userInfo">Prix :</span> {parcours.price} €</p>
-              {parcours.difficulty === 1 && (
-                <p><span className="userInfo">Difficulté :</span> <img src={fullStar} alt="Etoile Pleine" /><img src={emptyStar} alt="Etoile Vide" /> <img src={emptyStar} alt="Etoile Vide" /> ({difficultyLevel})</p>
-              )}
-              {parcours.difficulty === 2 && (
-                <p><span className="userInfo">Difficulté :</span> <img src={fullStar} alt="Etoile Pleine" /><img src={fullStar} alt="Etoile Pleine" /> <img src={emptyStar} alt="Etoile Vide" /> ({difficultyLevel})</p>
-              )}
-              {parcours.difficulty === 3 && (
-                <p><span className="userInfo">Difficulté :</span> <img src={fullStar} alt="Etoile Pleine" /><img src={fullStar} alt="Etoile Pleine" /> <img src={fullStar} alt="Etoile Pleine" /> ({difficultyLevel})</p>
-              )}
-            </div>
-            <div className="gameInfos">
-              <p><span className="userInfo">Description :</span> {parcours.description}</p>
-            </div>
-            <div className="clientInfos">
-              <Button onClick={() => setEditMode(!editMode)}>MODIFIER</Button>
-              <Button onClick={() => setAlertState(true)}>SUPPRIMER</Button>
+            <div className="post">
+              <div className="imgInfosContainer">
+                <div className="imgContainer">
+                  <img
+                    className="parcoursImage"
+                    src={`http://localhost:3001${parcours.parcoursPicture}`}
+                    alt="Photo du parcours"
+                  ></img>
+                </div>
+                <div className="infosContainer">
+                  <p>
+                    <span className="userInfo">Nom :</span> {parcours.name}{" "}
+                  </p>
+                  <p>
+                    <span className="userInfo">Durée :</span>{" "}
+                    {parcours.duration} jours
+                  </p>
+                  <p>
+                    <span className="userInfo">Prix :</span> {parcours.price} €
+                  </p>
+                  {parcours.difficulty === 1 && (
+                    <p>
+                      <span className="userInfo">Difficulté :</span>{" "}
+                      <img
+                        className="etoile"
+                        src={fullStar}
+                        alt="Etoile Pleine"
+                      />
+                      <img
+                        className="etoile"
+                        src={emptyStar}
+                        alt="Etoile Vide"
+                      />{" "}
+                      <img
+                        className="etoile"
+                        src={emptyStar}
+                        alt="Etoile Vide"
+                      />{" "}
+                      ({difficultyLevel})
+                    </p>
+                  )}
+                  {parcours.difficulty === 2 && (
+                    <p>
+                      <span className="userInfo">Difficulté :</span>{" "}
+                      <img
+                        className="etoile"
+                        src={fullStar}
+                        alt="Etoile Pleine"
+                      />
+                      <img
+                        className="etoile"
+                        src={fullStar}
+                        alt="Etoile Pleine"
+                      />{" "}
+                      <img
+                        className="etoile"
+                        src={emptyStar}
+                        alt="Etoile Vide"
+                      />{" "}
+                      ({difficultyLevel})
+                    </p>
+                  )}
+                  {parcours.difficulty === 3 && (
+                    <p>
+                      <span className="userInfo">Difficulté :</span>{" "}
+                      <img
+                        className="etoile"
+                        src={fullStar}
+                        alt="Etoile Pleine"
+                      />
+                      <img
+                        className="etoile"
+                        src={fullStar}
+                        alt="Etoile Pleine"
+                      />{" "}
+                      <img
+                        className="etoile"
+                        src={fullStar}
+                        alt="Etoile Pleine"
+                      />{" "}
+                      ({difficultyLevel})
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="gameInfos">
+                <p>
+                  <span className="userInfo">Description :</span>{" "}
+                  {parcours.description}
+                </p>
+              </div>
+              <div className="clientInfos">
+                <Button onClick={() => setEditMode(!editMode)}>MODIFIER</Button>
+                <Button onClick={() => setAlertState(true)}>SUPPRIMER</Button>
+              </div>
             </div>
             <StepsRegister parcoursSlug={parcours.slug} />
-            <p>Etapes</p>
+            <p className="etapeName">Etapes</p>
             {parcoursSteps.map((step) => (
               <Step
                 parcoursSlug={parcours.slug}
@@ -244,7 +335,9 @@ function SingleParcoursView() {
                 description={step.stepDescription}
               />
             ))}
-            <Button onClick={() => backToParcoursList()}>Retour aux parcours</Button>
+            <Button onClick={() => backToParcoursList()}>
+              LISTE PARCOURS 
+            </Button>
           </div>
         )}
       </div>

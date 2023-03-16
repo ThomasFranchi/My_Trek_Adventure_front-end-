@@ -4,6 +4,7 @@ import emptyStar from "../pictures/ico_emptyStar.png";
 import fullStar from "../pictures/ico_fullStar.png";
 
 import Button from "./atoms/Button";
+import "../styles/styleTrek.css";
 
 function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, minPlaces, maxPlaces, state, slug}) 
 {
@@ -54,18 +55,23 @@ function Parcours ({trekName, name, beginDate, endDate, parcoursID, guideID, min
   }
 
   return (
-    <div id="post"><div className="content">
-      <div className="gameInfos">
+    <div className="trekContainer">
+      <div className="trekNameInfo">
         <p>{trekName}</p>
-          <p><span className="userInfo">Sur le parcours </span> {parcours.name}</p>
-          <p><span className="userInfo">Animé par </span> {guide.firstName} {guide.lastName}</p>
+        </div>
+        <div className="trekParcoursInfo">
+          <p><span className="userInfo">Parcours : </span> {parcours.name}</p>
+          </div>
+          <div className="trekGuideInfo"> 
+          <p><span className="userInfo">Animé par : </span> {guide.firstName} {guide.lastName}</p>
+          </div>
+          <div className="trekStateInfo">
           <p><span className="userInfo">Etat : </span> {state}</p>
         </div>
-        <div className="gameInfos">
-          <Button onClick = {goToTrekPage}>Voir le trek</Button>
+        <div className="buttonTrek">
+          <Button onClick = {goToTrekPage}>VOIR LE TREK</Button>
         </div>
       </div>  
-    </div> 
   );
 }
 

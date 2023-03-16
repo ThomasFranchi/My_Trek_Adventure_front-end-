@@ -7,6 +7,7 @@ import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 import TreksRegister from "../components/organisms/TreksRegister";
 import Trek from "../components/Trek";
+import "../styles/styleTrekView.css"
 
 export default function TreksView() {
   const [treksList, setTreksList] = useState([]);
@@ -56,7 +57,7 @@ export default function TreksView() {
           <Topbar />
           {userLog.role !== "guide" && (<TreksRegister />)}
           <div id="treksList">
-            <p>Liste des dates</p>
+            <p className="listeDateView">Liste des dates</p>
             {errorMsg}
             {treksList.map((trek) => (
               <Trek

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "./atoms/Button";
+import "../styles/guide.css";
 
 function Guides({
   firstName,
@@ -8,8 +9,8 @@ function Guides({
   experienceYears,
   state,
   slug,
-  profilePicture, 
-  description, 
+  profilePicture,
+  description,
 }) {
   const navigate = useNavigate();
 
@@ -19,30 +20,41 @@ function Guides({
   }
 
   return (
-    <div id="postGuides">
-      <img style={{ width: 10 + "%" }} src={`http://localhost:3001${profilePicture}`} alt="Photo du Guide" />
-      <div className="content">
-        <div className="guideInfos">
+    <div className="postGuides">
+        <div className="guideProfil1">
+          <img
+            className="guideProfilPicture"
+            style={{ width: 10 + "%" }}
+            src={`http://localhost:3001${profilePicture}`}
+            alt="Photo du Guide"
+          />
+        </div>
+        <div className="guideProfil2">
           <p>
-            <span className="guideInfo">Prénom Nom :</span> {firstName}{" "}
+            <span className="guideInfo">Prénom Nom : </span> {firstName}{" "}
             {lastName}{" "}
           </p>
+          </div>
+          <div className="guideProfil3">
           <p>
-            <span className="guideInfo">mail :</span> {mail}{" "}
+            <span className="guideInfo">mail : </span> {mail}{" "}
           </p>
+          </div>
+          <div className="guideProfil4">
           <p>
-            <span className="guideInfo">Années d'expériences :</span>{" "}
+            <span className="guideInfo">Années d'expériences : </span>{" "}
             {experienceYears}{" "}
           </p>
+          </div>
+          <div className="guideProfil5">
           <p>
-            <span className="guideInfo">Etat :</span> {state}{" "}
+            <span className="guideInfo">Etat : </span> {state}{" "}
           </p>
         </div>
-        <div className="gameInfos">
-          <Button onClick={goToGuidesPage}>Voir le Guide</Button>
+        <div className="buttonLook">
+          <Button onClick={goToGuidesPage}>VOIR</Button>
         </div>
       </div>
-    </div>
   );
 }
 
