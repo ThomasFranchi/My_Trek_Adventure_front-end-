@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Topbar from "../components/Topbar";
@@ -14,8 +14,10 @@ import PopupAlert from "../components/organisms/PopupAlert";
 
 import "../styles/styleForm.css";
 import "../styles/styleSingleParcoursView.css";
+import { UserConnect } from "../App";
 
 function SingleParcoursView() {
+  const { userLog } = useContext(UserConnect);
   const [parcours, setParcours] = useState({});
   const [parcoursSteps, setParcoursSteps] = useState([]);
   const [newParcours, setNewParcours] = useState({
@@ -210,6 +212,7 @@ function SingleParcoursView() {
                 <option value="2"> 2 </option>
                 <option value="3"> 3 </option>
               </select>
+
               <div className="buttonContainer">
                 <Button>VALIDER</Button>
                 <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
@@ -317,12 +320,16 @@ function SingleParcoursView() {
                   {parcours.description}
                 </p>
               </div>
-              <div className="clientInfos">
-                <Button onClick={() => setEditMode(!editMode)}>MODIFIER</Button>
-                <Button onClick={() => setAlertState(true)}>SUPPRIMER</Button>
-              </div>
+              {userLog.role !== "guide" && (
+                <>
+                  <div className="clientInfos">
+                    <Button onClick={() => setEditMode(!editMode)}>MODIFIER</Button>
+                    <Button onClick={() => setAlertState(true)}>SUPPRIMER</Button>
+                  </div>
+                </>
+              )}
             </div>
-            <StepsRegister parcoursSlug={parcours.slug} />
+            {userLog.role !== "guide" && (<StepsRegister parcoursSlug={parcours.slug} />)}
             <p className="etapeName">Etapes</p>
             {parcoursSteps.map((step) => (
               <Step
@@ -336,7 +343,7 @@ function SingleParcoursView() {
               />
             ))}
             <Button onClick={() => backToParcoursList()}>
-              LISTE PARCOURS 
+              LISTE PARCOURS
             </Button>
           </div>
         )}

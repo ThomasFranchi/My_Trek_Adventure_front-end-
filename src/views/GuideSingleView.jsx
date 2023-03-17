@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Topbar from "../components/Topbar";
@@ -8,6 +8,7 @@ import Input from "../components/atoms/Input";
 import PopupAlert from "../components/organisms/PopupAlert";
 import "../styles/styleForm.css";
 import "../styles/styleSingleGuideView.css";
+import { UserConnect } from "../App";
 
 function SingleGuideView() {
   const [guide, setGuide] = useState({});
@@ -21,7 +22,7 @@ function SingleGuideView() {
     guidePicture: "",
     state: "",
   });
-
+  const { userLog } = useContext(UserConnect);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [editMode, setEditMode] = useState(false); // For the task to edit
 
@@ -243,15 +244,18 @@ function SingleGuideView() {
                 {guide.description}
               </p>
             </div>
-            <div className="buttonGuideContainer">
-              <Button onClick={() => setEditMode(!editMode)}>
-                MODIFIER
-              </Button>
-              <Button onClick={() => setAlertState(true)}>
-                SUPPRIMER
-              </Button>
-            </div>
-
+            {userLog.role !== "guide" && (
+              <>
+                <div className="buttonGuideContainer">
+                  <Button onClick={() => setEditMode(!editMode)}>
+                    MODIFIER
+                  </Button>
+                  <Button onClick={() => setAlertState(true)}>
+                    SUPPRIMER
+                  </Button>
+                </div>
+              </>
+            )}
             <Button onClick={() => backToGuidesList()}>
               LISTE GUIDE
             </Button>
@@ -259,7 +263,7 @@ function SingleGuideView() {
         )}
       </div>
       <div>
-        <Footer ClassName="footer" />
+        <Footer ClassName="homeFooter" />
       </div>
     </div>
   );
