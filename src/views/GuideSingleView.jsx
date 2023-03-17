@@ -177,7 +177,7 @@ function SingleGuideView() {
       <div>
         {deleteAlert && (
           <PopupAlert
-            type="ce profil d'utilisateur"
+            type="ce profil de guide"
             cancel={() => cancelDelete()}
             confirm={() => confirmDelete()}
           />
@@ -211,31 +211,31 @@ function SingleGuideView() {
               </h1>
             </div>
             <div className="imgInfosContainer">
-            <div className="imgGuideContainer">
-              <img 
-                className="imgGuideProfil"
-                src={`http://localhost:3001${guide.guidePicture}`}
-                alt="Photo de profil du guide"
-              />
-            </div>
-            <div className="guideInfosContainer">
-              <p>
-                <span className="guideInfo">Nom :</span> {guide.firstName}{" "}
-              </p>
-              <p>
-                <span className="guideInfo">Prénom :</span> {guide.lastName}{" "}
-              </p>
-              <p>
-                <span className="guideInfo">Mail :</span> {guide.mail}{" "}
-              </p>
-              <p>
-                <span className="guideInfo">Années d'expériences :</span>{" "}
-                {guide.experienceYears}{" "}
-              </p>
-              <p>
-                <span className="guideInfo">Etat :</span> {guide.state}{" "}
-              </p>
-            </div>
+              <div className="imgGuideContainer">
+                <img
+                  className="imgGuideProfil"
+                  src={`http://localhost:3001${guide.guidePicture}`}
+                  alt="Photo de profil du guide"
+                />
+              </div>
+              <div className="guideInfosContainer">
+                <p>
+                  <span className="guideInfo">Nom :</span> {guide.firstName}{" "}
+                </p>
+                <p>
+                  <span className="guideInfo">Prénom :</span> {guide.lastName}{" "}
+                </p>
+                <p>
+                  <span className="guideInfo">Mail :</span> {guide.mail}{" "}
+                </p>
+                <p>
+                  <span className="guideInfo">Années d'expériences :</span>{" "}
+                  {guide.experienceYears}{" "}
+                </p>
+                <p>
+                  <span className="guideInfo">Etat :</span> {guide.state}{" "}
+                </p>
+              </div>
             </div>
             <div className="descriptionContainer">
               <p>
