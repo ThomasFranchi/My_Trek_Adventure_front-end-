@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./atoms/Input";
 import Button from "./atoms/Button";
 import PopupAlert from "./organisms/PopupAlert";
+import { UserConnect } from "../App";
 
 import "../styles/styleStep.css";
 
@@ -22,6 +23,7 @@ function ParcoursStep({
     longitude: "",
     description: "",
   });
+  const { userLog } = useContext(UserConnect);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [editMode, setEditMode] = useState(false); // For the task to edit
   const navigate = useNavigate();
@@ -146,12 +148,14 @@ function ParcoursStep({
               onChange={handleChange}
             />
           ))}
+
           <div className="clientInfos">
             <Button>VALIDER</Button>
             <Button onClick={() => setEditMode(!editMode)}>
               ANNULER
             </Button>
           </div>
+
         </form>
       )}
       {!editMode && (
@@ -187,14 +191,18 @@ function ParcoursStep({
               </p>
             </div>
           </div>
-          <div className="buttonContainer">
-            <div>
-              <Button onClick={() => setEditMode(!editMode)}>EDITER</Button>
-            </div>
-            <div>
-              <Button onClick={() => setAlertState(true)}>SUPPRIMER</Button>
-            </div>
-          </div>
+          {userLog.role !== "guide" && (
+            <>
+              <div className="buttonContainer">
+                <div>
+                  <Button onClick={() => setEditMode(!editMode)}>EDITER</Button>
+                </div>
+                <div>
+                  <Button onClick={() => setAlertState(true)}>SUPPRIMER</Button>
+                </div>
+              </div>
+            </>
+          )}
           {deleteAlert && (
             <PopupAlert
               type="cette étape"

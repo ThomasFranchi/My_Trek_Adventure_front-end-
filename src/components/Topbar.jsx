@@ -50,9 +50,9 @@ export default function Topbar()
               <Link className="link" to="/clients/"><img className="sideIcon" src={icoClient} alt="Icone des clients"></img> Clients</Link>
             </div>
           )}
-          <div>
+          <div id = "guideButtons">
+            {userLog.role === "guide" && ( <button className="profileButton" onClick={goToProfile}>Mon profil</button> )}
             <button onClick={logout} className="buttondeco">Deconnexion</button>
-            {userLog.role === "guide" && ( <button onClick={goToProfile}>Mon profil</button> )}
             </div>
         </nav>
       </div>   

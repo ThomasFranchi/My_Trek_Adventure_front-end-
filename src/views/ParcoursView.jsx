@@ -14,8 +14,6 @@ function ParcoursView() {
   const [parcoursList, setParcoursList] = useState([])
   const [errorMsg, setErrorMsg] = useState ("");
   const {userLog} = useContext(UserConnect);
-
-  console.log(userLog.role)
   
   useEffect(() => {displayParcoursList()}, [])
 

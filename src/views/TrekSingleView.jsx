@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Topbar from "../components/Topbar";
@@ -9,6 +9,7 @@ import Button from "../components/atoms/Button";
 import Input from "../components/atoms/Input";
 import "../styles/styleForm.css";
 import "../styles/styleTrek.css"
+import { UserConnect } from "../App";
 
 function SingleTrekView() {
   const [trek, setTrek] = useState({});
@@ -21,6 +22,7 @@ function SingleTrekView() {
     maxPlaces: "",
     trekState: "",
   });
+  const { userLog } = useContext(UserConnect);
   const [trekBookings, setTrekBookings] = useState([]);
 
   // Guides and parcours iy user wants to change trek
@@ -305,9 +307,11 @@ function SingleTrekView() {
                   {trek.maxPlaces} places
                 </p>
                 </div>
+                {userLog.role !== "guide" && (
                 <div className="buttonEdit">
                 <Button onClick={() => setEditMode(!editMode)}>EDITER</Button>
               </div>
+                )}
             </div>
             <div className="gameInfos">
               <p className="reservationTitle">Réservations</p>
