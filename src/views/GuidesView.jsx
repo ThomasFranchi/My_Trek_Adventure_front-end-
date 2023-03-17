@@ -7,6 +7,8 @@ import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 import Guides from "../components/Guides";
 
+import "../styles/styleGuideView.css";
+
 import { UserConnect } from "../App";
 
 function GuidesView() {
@@ -57,7 +59,7 @@ function GuidesView() {
           <Topbar />
           {userLog.role !== "guide" && (<GuideRegister />)}
           <div id="guidesList">
-            <p>Liste des guides</p>
+            <p className="guideListTitle">Liste des guides</p>
             {errorMsg}
             {guideList.map((guide) => (
               <Guides
