@@ -8,6 +8,7 @@ import Input from "../components/atoms/Input";
 import Button from "../components/atoms/Button";
 import PopupAlert from "../components/organisms/PopupAlert";
 import "../styles/styleForm.css";
+import "../styles/styleSingleClientView.css";
 
 function SingleClientView() {
 
@@ -143,50 +144,71 @@ function SingleClientView() {
         {deleteAlert && (
           <PopupAlert type="ce profil d'utilisateur" cancel={() => cancelDelete()} confirm={() => confirmDelete()} />
         )}
-        <h1>Page de {client.firstName} {client.lastName}</h1>
-        <div>
-          {editMode && (
-            <div className="parcoursregistercontainer">
-              <form onSubmit={updateClient} encType="multipart/form-data">
-                {itemsArray.map((item) => (
-                  <Input
-                    name={item.name}
-                    label={item.label}
-                    value={item.value}
-                    required={item.required}
-                    type={item.type}
-                    onChange={handleChange}
-                  />
-                ))}
-                <div className="buttonContainer">
-                  <Button>VALIDER</Button>
-                  <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
-                </div>
-              </form>
-            </div>
-          )}
-          {!editMode && (
-            <div>
-              <img style={{ width: 10 + '%' }} src={`http://localhost:3001${client.clientPicture}`} alt="Photo de profil de l'utilisateur" />
-              <div className="content">
-                <div className="clientInfos">
-                  <p><span className="clientInfo">Nom Prénom :</span> {client.firstName} {client.lastName}</p>
-                  <p><span className="clientInfo">Mail :</span> {client.mail} </p>
-                  <div className="clientInfos">
-                    <Button onClick={() => setEditMode(!editMode)}>Modifier le profil</Button>
-                    <Button onClick={() => setAlertState(true)}>Supprimer le profil</Button>
-                  </div>
-                </div>
+
+        {editMode && (
+          <div className="parcoursregistercontainer">
+            <form onSubmit={updateClient} encType="multipart/form-data">
+              {itemsArray.map((item) => (
+                <Input
+                  name={item.name}
+                  label={item.label}
+                  value={item.value}
+                  required={item.required}
+                  type={item.type}
+                  onChange={handleChange}
+                />
+              ))}
+              <div className="buttonContainer">
+                <Button>VALIDER</Button>
+                <Button onClick={() => setEditMode(!editMode)}>ANNULER</Button>
               </div>
-              <Button onClick={() => backToClientsList()}>Retour aux clients</Button>
+            </form>
+          </div>
+        )}
+        {!editMode && (
+          <div className="clientContainer">
+            <div className="clientTitleContainer">
+              <h1 className="singleClientTitle">
+                {client.firstName} {client.lastName}
+              </h1>
             </div>
-          )}
-        </div>
-        <div>
-          <Footer ClassName="homeFooter" />
-        </div>
+            <div className="imgInfosContainer">
+              <div className="imgClientContainer">
+                <img
+                  className="imgClientProfil"
+                  src={`http://localhost:3001${client.clientPicture}`}
+                  alt="Photo de profil du client"
+                />
+              </div>
+              <div className="clientInfosContainer">
+                <p>
+                  <span className="clientInfo">Nom :</span> {client.firstName}
+                </p>
+                <p>
+                  <span className="clientInfo">Prénom :</span> {client.lastName}
+                </p>
+                <p>
+                  <span className="clientInfo">Mail :</span> {client.mail}
+                </p>
+              </div>
+            </div>
+            <div className="buttonGuideContainer">
+              <Button onClick={() => setEditMode(!editMode)}>
+                MODIFIER
+              </Button>
+              <Button onClick={() => setAlertState(true)}>
+                SUPPRIMER
+              </Button>
+            </div>
+            <Button onClick={() => backToClientsList()}>LISTE CLIENTS</Button>
+          </div>
+        )
+        }
+      </div >
+      <div>
+        <Footer ClassName="homeFooter" />
       </div>
-    </div>
+    </div >
 
   );
 }

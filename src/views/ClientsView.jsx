@@ -5,6 +5,8 @@ import Footer from "../components/Footer";
 import Client from "../components/Clients";
 import { UserConnect } from "../App";
 
+import "../styles/styleClientView.css";
+
 function ClientsView() {
   //const [isConnected, setIsConnected] = useState(false);
   const [clientsList, setClientsList] = useState([])
@@ -53,13 +55,13 @@ function ClientsView() {
       {userLog && (
         <>
           <Topbar />
-          <div id="parcoursList">
-            <p>Liste des clients</p>
+          <div id="guidesList">
+            <p className="clientListTitle">Liste des clients</p>
             {errorMsg}
             {clientsList.map((client) => (
               <Client
                 key={client.slug}
-                picture={client.profilePicture}
+                profilePicture={client.clientPicture}
                 firstName={client.firstName}
                 lastName={client.lastName}
                 mail={client.mail}
